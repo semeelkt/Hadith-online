@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hadith Online</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #f4f6f8;
+        color: #222;
+      }
+      main {
+        width: min(700px, 92vw);
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      }
+      h1 {
+        margin-top: 0;
+      }
+      #hadith {
+        line-height: 1.6;
+        margin: 16px 0;
+      }
+      button {
+        border: 0;
+        border-radius: 8px;
+        padding: 10px 14px;
+        background: #1f6feb;
+        color: #fff;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #1558bd;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Hadith Online</h1>
+      <p id="hadith">Loading…</p>
+      <button id="next-hadith" type="button">Show another Hadith</button>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>
