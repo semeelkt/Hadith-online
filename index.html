@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Hadith Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <h1>📖 Hadith Library</h1>
+            </div>
+            <div class="header-right">
+                <div class="search-container">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="search-input"
+                        placeholder="Search hadiths...">
+                    <span class="search-icon">🔍</span>
+                </div>
+                <button id="themeToggle" class="theme-toggle" title="Toggle dark mode">
+                    <span class="theme-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Filters</h3>
+                <button id="clearFilters" class="clear-btn">Clear All</button>
+            </div>
+
+            <div class="filter-group">
+                <label for="bookFilter">Book:</label>
+                <select id="bookFilter" class="filter-select">
+                    <option value="">All Books</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Results Found:</label>
+                <div class="results-count" id="resultsCount">Loading...</div>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <section class="content">
+            <!-- Loading State -->
+            <div id="loadingState" class="loading-state">
+                <div class="spinner"></div>
+                <p>Loading hadiths...</p>
+            </div>
+
+            <!-- Error State -->
+            <div id="errorState" class="error-state" style="display: none;">
+                <p class="error-message" id="errorMessage"></p>
+                <button onclick="location.reload()" class="retry-btn">Retry</button>
+            </div>
+
+            <!-- Hadiths Grid -->
+            <div id="hadithsContainer" class="hadiths-grid"></div>
+        </section>
+    </main>
+
+    <!-- Pagination -->
+    <footer class="pagination-footer">
+        <div class="pagination-controls">
+            <button id="prevBtn" class="pagination-btn">← Previous</button>
+
+            <div class="pagination-info">
+                <span>Page <span id="currentPage">1</span> of <span id="totalPages">1</span></span>
+                <label for="itemsPerPage" class="items-label">Show:</label>
+                <select id="itemsPerPage" class="items-select">
+                    <option value="10">10 per page</option>
+                    <option value="20">20 per page</option>
+                    <option value="50">50 per page</option>
+                </select>
+            </div>
+
+            <button id="nextBtn" class="pagination-btn">Next →</button>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
