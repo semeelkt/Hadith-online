@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hadith Viewer</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Sahih al-Bukhari Hadith Viewer</h1>
+  </header>
+
+  <div class="container">
+    
+    <div class="search-box">
+      <input type="number" id="hadithId" placeholder="Enter Hadith Number (e.g. 1)">
+      <button onclick="loadHadith()">Search</button>
+    </div>
+
+    <div id="hadithCard" class="card">
+      <p>Enter a hadith number to view</p>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
