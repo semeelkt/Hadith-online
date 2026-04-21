@@ -1,3 +1,6 @@
+import { db } from './firebase-config.js';
+import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+
 // ============================================
 // ADMIN FUNCTIONALITY
 // ============================================
@@ -87,214 +90,154 @@ async function publishArticle(event) {
       content,
       author,
       image: imageData,
-      date: new Date().toLocaleDateString()
+      date: new Date().toLocaleDateString(),
+      createdAt: new Date()
     };
 
     try {
-      // Try to save to backend
-      const response = await fetch("http://localhost:3000/api/articles", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(article)
-      });
-
-      if (response.ok) {
-        messageElement.textContent = "✓ Article published successfully!";
-        messageElement.className = "message success";
-      } else {
-        throw new Error("Backend error");
-      }
-    } catch (error) {
-      // Fallback to localStorage if backend is not running
-      const articles = JSON.parse(localStorage.getItem("articles") || "[]");
-      articles.push(article);
-      localStorage.setItem("articles", JSON.stringify(articles));
-      messageElement.textContent = "✓ Article saved locally (backend not running)";
+      // Save to Firestore
+      await addDoc(collection(db, "articles"), article);
+      messageElement.textContent = "✓ Article published successfully!";
       messageElement.className = "message success";
+
+      // Reset form
+      document.getElementById("articleTitle").value = "";
+      document.getElementById("articleContent").value = "";
+      document.getElementById("articleAuthor").value = "";
+      document.getElementById("articleImage").value = "";
+
+      // Refresh home articles
+      displayHomeArticles();
+
+      setTimeout(() => {
+        messageElement.textContent = "";
+      }, 3000);
+    } catch (error) {
+      messageElement.textContent = "❌ Error publishing article";
+      messageElement.className = "message error";
+      console.error("Error publishing article:", error);
     }
-
-    // Reset form
-    document.getElementById("articleTitle").value = "";
-    document.getElementById("articleContent").value = "";
-    document.getElementById("articleAuthor").value = "";
-    document.getElementById("articleImage").value = "";
-
-    // Refresh home articles
-    displayHomeArticles();
-
-    setTimeout(() => {
-      messageElement.textContent = "";
-    }, 3000);
   };
 
   reader.readAsDataURL(imageFile);
 }
 
 // Load articles
-function loadArticles() {
-  fetch("http://localhost:3000/api/articles")
-    .then(res => res.json())
-    .then(articles => {
-      const articlesList = document.getElementById("articlesList");
-      articlesList.innerHTML = "";
+async function loadArticles() {
+  try {
+    const q = query(
+      collection(db, "articles"),
+      orderBy("createdAt", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    const articles = [];
 
-      if (articles.length === 0) {
-        articlesList.innerHTML = "<p style='color: rgba(212, 165, 116, 0.6); text-align: center;'>No articles published yet.</p>";
-        return;
-      }
-
-      articles.forEach((article, index) => {
-        const articleCard = document.createElement("div");
-        articleCard.className = "article-card";
-        articleCard.innerHTML = `
-          <img src="data:image/jpeg;base64,${article.image}" alt="${article.title}" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;">
-          <h3>${article.title}</h3>
-          <p>${article.content.substring(0, 100)}...</p>
-          <div class="article-meta">
-            <div>
-              <div style="color: var(--accent-gold);">By ${article.author}</div>
-              <div>${article.date}</div>
-            </div>
-            <button class="delete-btn" onclick="deleteArticle(${article.id})">Delete</button>
-          </div>
-        `;
-        articlesList.appendChild(articleCard);
-      });
-    })
-    .catch(error => {
-      // Fallback to localStorage
-      const articles = JSON.parse(localStorage.getItem("articles") || "[]");
-      const articlesList = document.getElementById("articlesList");
-      articlesList.innerHTML = "";
-
-      if (articles.length === 0) {
-        articlesList.innerHTML = "<p style='color: rgba(212, 165, 116, 0.6); text-align: center;'>No articles published yet.</p>";
-        return;
-      }
-
-      articles.forEach((article, index) => {
-        const articleCard = document.createElement("div");
-        articleCard.className = "article-card";
-        articleCard.innerHTML = `
-          <img src="${article.image}" alt="${article.title}">
-          <h3>${article.title}</h3>
-          <p>${article.content.substring(0, 100)}...</p>
-          <div class="article-meta">
-            <div>
-              <div style="color: var(--accent-gold);">By ${article.author}</div>
-              <div>${article.date}</div>
-            </div>
-            <button class="delete-btn" onclick="deleteArticle(${index})">Delete</button>
-          </div>
-        `;
-        articlesList.appendChild(articleCard);
+    querySnapshot.forEach((doc) => {
+      articles.push({
+        id: doc.id,
+        ...doc.data()
       });
     });
+
+    const articlesList = document.getElementById("articlesList");
+    articlesList.innerHTML = "";
+
+    if (articles.length === 0) {
+      articlesList.innerHTML = "<p style='color: rgba(212, 165, 116, 0.6); text-align: center;'>No articles published yet.</p>";
+      return;
+    }
+
+    articles.forEach((article) => {
+      const articleCard = document.createElement("div");
+      articleCard.className = "article-card";
+      articleCard.innerHTML = `
+        <img src="${article.image}" alt="${article.title}" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;">
+        <h3>${article.title}</h3>
+        <p>${article.content.substring(0, 100)}...</p>
+        <div class="article-meta">
+          <div>
+            <div style="color: var(--accent-gold);">By ${article.author}</div>
+            <div>${article.date}</div>
+          </div>
+          <button class="delete-btn" onclick="deleteArticle('${article.id}')">Delete</button>
+        </div>
+      `;
+      articlesList.appendChild(articleCard);
+    });
+  } catch (error) {
+    console.error("Error loading articles:", error);
+    const articlesList = document.getElementById("articlesList");
+    articlesList.innerHTML = "<p style='color: red; text-align: center;'>Error loading articles</p>";
+  }
 }
 
 // Delete article
-function deleteArticle(index) {
+async function deleteArticle(docId) {
   if (confirm("Are you sure you want to delete this article?")) {
-    // Try to delete from backend
-    fetch(`http://localhost:3000/api/articles/${index}`, {
-      method: "DELETE"
-    })
-      .then(() => {
-        loadArticles();
-        displayHomeArticles();
-      })
-      .catch(() => {
-        // Fallback to localStorage
-        const articles = JSON.parse(localStorage.getItem("articles") || "[]");
-        articles.splice(index, 1);
-        localStorage.setItem("articles", JSON.stringify(articles));
-        loadArticles();
-        displayHomeArticles();
-      });
+    try {
+      await deleteDoc(doc(db, "articles", docId));
+      loadArticles();
+      displayHomeArticles();
+    } catch (error) {
+      console.error("Error deleting article:", error);
+      alert("Error deleting article");
+    }
   }
 }
 
 // Display articles on home page (latest 3 only)
-function displayHomeArticles() {
-  fetch("http://localhost:3000/api/articles")
-    .then(res => res.json())
-    .then(articles => {
-      const articlesList = document.getElementById("homeArticlesList");
-      if (!articlesList) return;
+async function displayHomeArticles() {
+  try {
+    const q = query(
+      collection(db, "articles"),
+      orderBy("createdAt", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    const articles = [];
 
-      articlesList.innerHTML = "";
-
-      // Show only latest 3
-      const latestArticles = articles.slice(0, 3);
-
-      if (latestArticles.length === 0) {
-        articlesList.innerHTML = "<p class='home-articles-empty'>No articles published yet. Check back soon!</p>";
-        return;
-      }
-
-      latestArticles.forEach((article) => {
-        const articleCard = document.createElement("div");
-        articleCard.className = "home-article-card";
-        articleCard.onclick = () => openArticleReader(article);
-
-        // Handle both data:image and base64 formats
-        let imageSrc = article.image;
-        if (!imageSrc.startsWith("data:")) {
-          imageSrc = `data:image/jpeg;base64,${imageSrc}`;
-        }
-
-        articleCard.innerHTML = `
-          <img src="${imageSrc}" alt="${article.title}" class="home-article-image">
-          <div class="home-article-content">
-            <h3>${article.title}</h3>
-            <p>${article.content}</p>
-            <div class="home-article-meta">
-              <div>
-                <div class="home-article-author">By ${article.author}</div>
-                <div>${article.date}</div>
-              </div>
-            </div>
-          </div>
-        `;
-        articlesList.appendChild(articleCard);
-      });
-    })
-    .catch(() => {
-      // Fallback to localStorage
-      const articles = JSON.parse(localStorage.getItem("articles") || "[]");
-      const articlesList = document.getElementById("homeArticlesList");
-
-      if (!articlesList) return;
-
-      articlesList.innerHTML = "";
-
-      const latestArticles = articles.slice(0, 3);
-
-      if (latestArticles.length === 0) {
-        articlesList.innerHTML = "<p class='home-articles-empty'>No articles published yet. Check back soon!</p>";
-        return;
-      }
-
-      latestArticles.forEach((article, index) => {
-        const articleCard = document.createElement("div");
-        articleCard.className = "home-article-card";
-        articleCard.onclick = () => openArticleReader(article);
-        articleCard.innerHTML = `
-          <img src="${article.image}" alt="${article.title}" class="home-article-image">
-          <div class="home-article-content">
-            <h3>${article.title}</h3>
-            <p>${article.content}</p>
-            <div class="home-article-meta">
-              <div>
-                <div class="home-article-author">By ${article.author}</div>
-                <div>${article.date}</div>
-              </div>
-            </div>
-          </div>
-        `;
-        articlesList.appendChild(articleCard);
+    querySnapshot.forEach((doc) => {
+      articles.push({
+        id: doc.id,
+        ...doc.data()
       });
     });
+
+    const articlesList = document.getElementById("homeArticlesList");
+    if (!articlesList) return;
+
+    articlesList.innerHTML = "";
+
+    // Show only latest 3
+    const latestArticles = articles.slice(0, 3);
+
+    if (latestArticles.length === 0) {
+      articlesList.innerHTML = "<p class='home-articles-empty'>No articles published yet. Check back soon!</p>";
+      return;
+    }
+
+    latestArticles.forEach((article) => {
+      const articleCard = document.createElement("div");
+      articleCard.className = "home-article-card";
+      articleCard.onclick = () => openArticleReader(article);
+
+      articleCard.innerHTML = `
+        <img src="${article.image}" alt="${article.title}" class="home-article-image">
+        <div class="home-article-content">
+          <h3>${article.title}</h3>
+          <p>${article.content}</p>
+          <div class="home-article-meta">
+            <div>
+              <div class="home-article-author">By ${article.author}</div>
+              <div>${article.date}</div>
+            </div>
+          </div>
+        </div>
+      `;
+      articlesList.appendChild(articleCard);
+    });
+  } catch (error) {
+    console.error("Error displaying home articles:", error);
+  }
 }
 
 // Open article reader modal
@@ -302,13 +245,8 @@ function openArticleReader(article) {
   const modal = document.getElementById("articleReaderModal");
   const content = document.getElementById("articleReaderContent");
 
-  let imageSrc = article.image;
-  if (!imageSrc.startsWith("data:")) {
-    imageSrc = `data:image/jpeg;base64,${imageSrc}`;
-  }
-
   content.innerHTML = `
-    <img src="${imageSrc}" alt="${article.title}">
+    <img src="${article.image}" alt="${article.title}">
     <h2>${article.title}</h2>
     <div class="reader-meta">
       <div><span class="reader-author">By ${article.author}</span></div>
@@ -326,18 +264,28 @@ function closeArticleReader() {
 }
 
 // Open more articles modal
-function openMoreArticles() {
-  fetch("http://localhost:3000/api/articles")
-    .then(res => res.json())
-    .then(articles => {
-      displayAllArticles(articles);
-      document.getElementById("allArticlesModal").classList.remove("hidden");
-    })
-    .catch(() => {
-      const articles = JSON.parse(localStorage.getItem("articles") || "[]");
-      displayAllArticles(articles);
-      document.getElementById("allArticlesModal").classList.remove("hidden");
+async function openMoreArticles() {
+  try {
+    const q = query(
+      collection(db, "articles"),
+      orderBy("createdAt", "desc")
+    );
+    const querySnapshot = await getDocs(q);
+    const articles = [];
+
+    querySnapshot.forEach((doc) => {
+      articles.push({
+        id: doc.id,
+        ...doc.data()
+      });
     });
+
+    displayAllArticles(articles);
+    document.getElementById("allArticlesModal").classList.remove("hidden");
+  } catch (error) {
+    console.error("Error opening more articles:", error);
+    alert("Error loading articles");
+  }
 }
 
 // Display all articles in modal
@@ -358,13 +306,8 @@ function displayAllArticles(articles) {
       closeMoreArticles();
     };
 
-    let imageSrc = article.image;
-    if (!imageSrc.startsWith("data:")) {
-      imageSrc = `data:image/jpeg;base64,${imageSrc}`;
-    }
-
     item.innerHTML = `
-      <img src="${imageSrc}" alt="${article.title}">
+      <img src="${article.image}" alt="${article.title}">
       <div class="all-article-item-content">
         <h4>${article.title}</h4>
         <div class="date">${article.date}</div>
