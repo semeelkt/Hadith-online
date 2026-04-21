@@ -30,26 +30,33 @@ async function loadHadith() {
 
   card.innerHTML = "<p>Loading...</p>";
 
-  const data = await getHadith("eng-bukhari", id);
+  // Fetch both English and Arabic versions
+  const englishData = await getHadith("eng-bukhari", id);
+  const arabicData = await getHadith("ara-bukhari", id);
 
-  if (!data || !data.hadiths) {
+  if (!englishData || !englishData.hadiths) {
     card.innerHTML = "<p>Hadith not found or API error</p>";
     return;
   }
 
-  // Find the hadith in the array by hadithnumber
-  const hadith = data.hadiths.find(h => h.hadithnumber === parseInt(id));
+  // Find the hadith in the arrays by hadithnumber
+  const englishHadith = englishData.hadiths.find(h => h.hadithnumber === parseInt(id));
+  const arabicHadith = arabicData?.hadiths?.find(h => h.hadithnumber === parseInt(id));
 
-  if (!hadith || !hadith.text) {
+  if (!englishHadith || !englishHadith.text) {
     card.innerHTML = "<p>Hadith not found</p>";
     return;
   }
 
+  const arabicText = arabicHadith?.text || "Arabic not available";
+
   card.innerHTML = `
     <div class="hadith-content">
-      <div class="english">${hadith.text}</div>
+      <div class="arabic">${arabicText}</div>
       <hr>
-      <small><b>Hadith #${hadith.hadithnumber}</b></small>
+      <div class="english">${englishHadith.text}</div>
+      <hr>
+      <small><b>Hadith #${englishHadith.hadithnumber}</b></small>
     </div>
   `;
 }
