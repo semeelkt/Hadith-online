@@ -2,27 +2,142 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hadith Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hadith Viewer | Premium Islamic Knowledge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <header>
-    <h1>Sahih al-Bukhari Hadith Viewer</h1>
+  <header class="navbar">
+    <div class="navbar-content">
+      <div class="navbar-logo">
+        <span class="logo-icon">ﺍ</span>
+        <h1>Hadith Vault</h1>
+      </div>
+      <nav class="navbar-nav">
+        <span class="nav-item active">Sahih al-Bukhari</span>
+        <button id="adminCircle" class="admin-circle" title="Admin Panel">⚙️</button>
+      </nav>
+    </div>
   </header>
 
-  <div class="container">
-    
-    <div class="search-box">
-      <input type="number" id="hadithId" placeholder="Enter Hadith Number (e.g. 1)">
-      <button onclick="loadHadith()">Search</button>
+  <!-- Admin Login Modal -->
+  <div id="adminLoginModal" class="modal hidden">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeAdminModal()">✕</button>
+      <h2>Admin Login</h2>
+      <input type="password" id="adminPassword" placeholder="Enter admin password" class="admin-input">
+      <button onclick="loginAdmin()" class="admin-btn">Login</button>
+      <p id="adminError" class="admin-error"></p>
     </div>
-
-    <div id="hadithCard" class="card">
-      <p>Enter a hadith number to view</p>
-    </div>
-
   </div>
+
+  <!-- Admin Panel -->
+  <div id="adminPanel" class="admin-panel hidden">
+    <div class="admin-header">
+      <h2>Admin Dashboard</h2>
+      <button onclick="logoutAdmin()" class="admin-logout">Logout</button>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab-btn active" onclick="switchTab('publish')">Publish Article</button>
+      <button class="admin-tab-btn" onclick="switchTab('view')">View Articles</button>
+    </div>
+
+    <!-- Publish Article Tab -->
+    <div id="publishTab" class="admin-tab-content active">
+      <form onsubmit="publishArticle(event)" class="admin-form">
+        <input type="text" id="articleTitle" placeholder="Article Title" required>
+        <textarea id="articleContent" placeholder="Article Content" rows="6" required></textarea>
+        <input type="text" id="articleAuthor" placeholder="Author" required>
+        <input type="file" id="articleImage" accept="image/*" required>
+        <button type="submit" class="admin-submit-btn">Publish Article</button>
+      </form>
+      <p id="publishMessage" class="message"></p>
+    </div>
+
+    <!-- View Articles Tab -->
+    <div id="viewTab" class="admin-tab-content">
+      <div id="articlesList" class="articles-list"></div>
+    </div>
+  </div>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <h2>Explore Sacred Knowledge</h2>
+        <p>Access authentic Islamic teachings with elegance and precision</p>
+      </div>
+    </section>
+
+    <!-- Search Section -->
+    <div class="container">
+      <div class="search-section">
+        <div class="search-container">
+          <input
+            type="number"
+            id="hadithId"
+            placeholder="Enter Hadith Number"
+            class="search-input"
+            min="1"
+          >
+          <button onclick="loadHadith()" class="search-btn">
+            <span>Search</span>
+            <span class="search-icon">→</span>
+          </button>
+        </div>
+        <p class="search-hint">Try: 1, 5, 100</p>
+      </div>
+
+      <!-- Hadith Display Card -->
+      <div id="hadithCard" class="hadith-card glass-effect">
+        <div class="card-content">
+          <p class="empty-state">
+            <span class="empty-emoji">✨</span>
+            Enter a hadith number to discover
+          </p>
+        </div>
+      </div>
+
+      <!-- Loading Spinner (Hidden by default) -->
+      <div id="loadingSpinner" class="spinner hidden"></div>
+    </div>
+
+    <!-- Published Articles Section -->
+    <div class="articles-section">
+      <div class="articles-header">
+        <h2 class="articles-title">📚 Latest Articles</h2>
+        <button class="more-articles-btn" onclick="openMoreArticles()">More Articles →</button>
+      </div>
+      <div id="homeArticlesList" class="home-articles-grid"></div>
+    </div>
+
+  </main>
+
+  <!-- Article Reader Modal -->
+  <div id="articleReaderModal" class="modal hidden">
+    <div class="article-reader-modal-content">
+      <button class="modal-close" onclick="closeArticleReader()">✕</button>
+      <div id="articleReaderContent" class="article-reader-content"></div>
+    </div>
+  </div>
+
+  <!-- All Articles Modal -->
+  <div id="allArticlesModal" class="modal hidden">
+    <div class="all-articles-modal-content">
+      <button class="modal-close" onclick="closeMoreArticles()">✕</button>
+      <h2>All Articles</h2>
+      <div id="allArticlesList" class="all-articles-list"></div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>&copy; 2026 Hadith Vault. Preserving Islamic Knowledge.</p>
+  </footer>
 
   <script src="script.js"></script>
 </body>
