@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +15,7 @@
   <header class="navbar">
     <div class="navbar-content">
       <div class="navbar-logo">
-        <span class="logo-icon">ﺍ</span>
+        <span class="logo-icon"><i class="bi bi-book-half"></i></span>
         <h1>Hadith Vault</h1>
       </div>
       <nav class="navbar-nav">
@@ -26,7 +27,7 @@
           <option value="eng-nasai">Sunan an-Nasa'i</option>
           <option value="eng-ibnmajah">Sunan Ibn Majah</option>
         </select>
-        <button id="adminCircle" class="admin-circle" title="Admin Panel">⚙️</button>
+        <button id="adminCircle" class="admin-circle" title="Admin Panel"><i class="bi bi-gear-fill"></i></button>
       </nav>
     </div>
   </header>
@@ -128,7 +129,7 @@
     <!-- Published Articles Section -->
     <div class="articles-section">
       <div class="articles-header">
-        <h2 class="articles-title">📚 Latest Articles</h2>
+        <h2 class="articles-title"><i class="bi bi-newspaper"></i> Latest Articles</h2>
         <button class="more-articles-btn" onclick="openMoreArticles()">More Articles →</button>
       </div>
       <div id="homeArticlesList" class="home-articles-grid"></div>

@@ -65,7 +65,7 @@ async function loginAdmin() {
     document.getElementById("adminPassword").value = "";
     loadArticles();
   } else {
-    errorElement.textContent = "❌ Invalid password";
+    errorElement.textContent = "✘ Invalid password";
     document.getElementById("adminPassword").value = "";
   }
 }
@@ -105,7 +105,7 @@ async function publishArticle(event) {
   const messageElement = document.getElementById("publishMessage");
 
   if (!title || !content || !author || !imageFile) {
-    messageElement.textContent = "❌ Please fill all fields";
+    messageElement.textContent = "✘ Please fill all fields";
     messageElement.className = "message error";
     return;
   }
@@ -143,7 +143,7 @@ async function publishArticle(event) {
         messageElement.textContent = "";
       }, 3000);
     } catch (error) {
-      messageElement.textContent = "❌ Error publishing article";
+      messageElement.textContent = "✘ Error publishing article";
       messageElement.className = "message error";
       console.error("Error publishing article:", error);
     }
@@ -438,7 +438,7 @@ function resetSearch() {
   document.getElementById("hadithCard").innerHTML = `
     <div class="card-content">
       <p class="empty-state">
-        <span class="empty-emoji">✨</span>
+        <span class="empty-emoji"><i class="bi bi-sparkles"></i></span>
         Enter a hadith number or keyword to discover
       </p>
     </div>
@@ -479,8 +479,8 @@ function displayHadith(hadithData, collection) {
       </div>
 
       <div class="hadith-meta">
-        <span>📖 ${collectionName}</span>
-        <span>🔍 ID: ${englishHadith.hadithnumber}</span>
+        <span><i class="bi bi-book"></i> ${collectionName}</span>
+        <span><i class="bi bi-tag"></i> ID: ${englishHadith.hadithnumber}</span>
       </div>
     </div>
   `;
@@ -497,7 +497,7 @@ async function searchHadithByKeyword(keyword) {
   card.innerHTML = `
     <div class="card-content">
       <p class="empty-state">
-        <span class="empty-emoji">🔍</span>
+        <span class="empty-emoji"><i class="bi bi-search"></i></span>
         Searching for "${keyword}"...
       </p>
     </div>
@@ -522,7 +522,7 @@ async function searchHadithByKeyword(keyword) {
     spinner.classList.add("hidden");
 
     if (matches.length === 0) {
-      card.innerHTML = '<div class="card-content"><p class="error-state">❌ No hadiths found matching your search</p></div>';
+      card.innerHTML = '<div class="card-content"><p class="error-state"><i class="bi bi-exclamation-circle"></i> No hadiths found matching your search</p></div>';
       return;
     }
 
@@ -539,7 +539,7 @@ async function searchHadithByKeyword(keyword) {
   } catch (error) {
     console.error("Error searching hadiths:", error);
     spinner.classList.add("hidden");
-    card.innerHTML = '<div class="card-content"><p class="error-state">❌ Error searching hadiths</p></div>';
+    card.innerHTML = '<div class="card-content"><p class="error-state"><i class="bi bi-exclamation-triangle"></i> Error searching hadiths</p></div>';
   }
 }
 
@@ -588,7 +588,7 @@ async function loadHadith() {
   const collection = document.getElementById("collectionSelect").value;
 
   if (!input) {
-    card.innerHTML = '<div class="card-content"><p class="error-state">❌ Please enter a hadith number or keyword</p></div>';
+    card.innerHTML = '<div class="card-content"><p class="error-state"><i class="bi bi-exclamation-circle"></i> Please enter a hadith number or keyword</p></div>';
     return;
   }
 
@@ -604,7 +604,7 @@ async function loadHadith() {
     card.innerHTML = `
       <div class="card-content">
         <p class="empty-state">
-          <span class="empty-emoji">⏳</span>
+          <span class="empty-emoji"><i class="bi bi-hourglass-split"></i></span>
           Loading hadith...
         </p>
       </div>
@@ -617,7 +617,7 @@ async function loadHadith() {
     spinner.classList.add("hidden");
 
     if (!englishData || !englishData.hadiths) {
-      card.innerHTML = '<div class="card-content"><p class="error-state">⚠️ Hadith not found or API error</p></div>';
+      card.innerHTML = '<div class="card-content"><p class="error-state"><i class="bi bi-exclamation-triangle"></i> Hadith not found or API error</p></div>';
       return;
     }
 
@@ -625,7 +625,7 @@ async function loadHadith() {
     const arabicHadith = arabicData?.hadiths?.find(h => h.hadithnumber === id);
 
     if (!englishHadith || !englishHadith.text) {
-      card.innerHTML = '<div class="card-content"><p class="error-state">❌ Hadith not found</p></div>';
+      card.innerHTML = '<div class="card-content"><p class="error-state"><i class="bi bi-exclamation-circle"></i> Hadith not found</p></div>';
       return;
     }
 
