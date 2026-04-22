@@ -94,7 +94,7 @@
     <!-- Hero Section -->
     <section class="hero-new">
       <div class="hero-container">
-        <!-- Left Side - Quote -->
+        <!-- Left Side - Quote and Books -->
         <div class="hero-left">
           <div class="quote-card">
             <div class="quote-badge">
@@ -103,40 +103,6 @@
             <p class="quote-text">"I have left among you that which, if you hold fast to it, you will never go astray: the Book of Allah and my Sunnah."</p>
             <p class="quote-source">- Sahih al-Bukhari 7321</p>
           </div>
-          <div class="hero-image">
-            <img src="Firefly_Gemini Flash_make a image of old islamic hadees book bg of solid gold rgba(238, 199, 124) 400557.png" alt="Islamic Hadith Books" class="hadith-book-image">
-          </div>
-        </div>
-
-        <!-- Right Side - Search -->
-        <div class="hero-right">
-          <h2>Search Authentic Hadith</h2>
-          <p class="hero-subtitle">Search through 100,000+ hadith from the authentic books of Sihah Sitha.</p>
-
-          <div class="search-section-hero">
-            <div class="search-container-hero">
-              <input
-                type="text"
-                id="hadithId"
-                placeholder="Search hadith by keyword, Arabic or reference..."
-                class="search-input-hero"
-              >
-              <select class="books-filter">
-                <option>All Books</option>
-                <option value="eng-bukhari">Sahih al-Bukhari</option>
-                <option value="eng-muslim">Sahih Muslim</option>
-                <option value="eng-abudawud">Sunan Abu Dawud</option>
-                <option value="eng-tirmidhi">Sunan at-Tirmidhi</option>
-                <option value="eng-nasai">Sunan an-Nasa'i</option>
-                <option value="eng-ibnmajah">Sunan Ibn Majah</option>
-              </select>
-              <button onclick="loadHadith()" class="search-btn-hero">Search</button>
-              <button onclick="resetSearch()" class="reset-btn-hero" title="Clear search">
-                <i class="bi bi-arrow-counterclockwise"></i>
-              </button>
-            </div>
-          </div>
-
           <p class="browse-text">Or browse by book:</p>
           <div class="books-browser">
             <div class="book-option" onclick="selectCollection(this)" data-collection="eng-bukhari">
@@ -168,6 +134,57 @@
               <div class="book-icon book-icon-6"><i class="bi bi-book-fill"></i></div>
               <p class="book-count">4,341</p>
               <p class="book-name">Sunan<br>Ibn Majah</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side - Search and Results -->
+        <div class="hero-right">
+          <h2>Search Authentic Hadith</h2>
+          <p class="hero-subtitle">Search through 100,000+ hadith from the authentic books of Sihah Sitha.</p>
+
+          <div class="search-section-hero">
+            <div class="search-container-hero">
+              <input
+                type="text"
+                id="hadithId"
+                placeholder="Search hadith by keyword, Arabic or reference..."
+                class="search-input-hero"
+              >
+              <select class="books-filter">
+                <option>All Books</option>
+                <option value="eng-bukhari">Sahih al-Bukhari</option>
+                <option value="eng-muslim">Sahih Muslim</option>
+                <option value="eng-abudawud">Sunan Abu Dawud</option>
+                <option value="eng-tirmidhi">Sunan at-Tirmidhi</option>
+                <option value="eng-nasai">Sunan an-Nasa'i</option>
+                <option value="eng-ibnmajah">Sunan Ibn Majah</option>
+              </select>
+              <button onclick="loadHadith()" class="search-btn-hero">Search</button>
+              <button onclick="resetSearch()" class="reset-btn-hero" title="Clear search">
+                <i class="bi bi-arrow-counterclockwise"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Search Results moved here -->
+          <div id="searchResults" class="search-results hidden">
+            <div class="results-header">
+              <h3>Search Results</h3>
+              <button class="results-close-btn" onclick="clearSearchResults()">✕</button>
+            </div>
+            <div id="resultsList" class="results-list"></div>
+          </div>
+
+          <!-- Hadith Card moved here -->
+          <div id="hadithCardContainer" class="hadith-card-container hidden">
+            <div id="hadithCard" class="hadith-card glass-effect">
+              <div class="card-content">
+                <p class="empty-state">
+                  <span class="empty-emoji">✨</span>
+                  Enter a hadith number or keyword to discover
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -257,31 +274,8 @@
       </div>
     </section>
 
-    <!-- Search Results (for keyword search) -->
-    <div id="searchResults" class="search-results hidden">
-      <div class="results-header">
-        <h3>Search Results</h3>
-        <button class="results-close-btn" onclick="clearSearchResults()">✕</button>
-      </div>
-      <div id="resultsList" class="results-list"></div>
-    </div>
-
     <!-- Loading Spinner (Hidden by default) -->
     <div id="loadingSpinner" class="spinner hidden"></div>
-
-    <!-- Hadith Card (Hidden by default, shown when search is performed) -->
-    <div id="hadithCardContainer" class="hadith-card-container hidden">
-      <div class="container">
-        <div id="hadithCard" class="hadith-card glass-effect">
-          <div class="card-content">
-            <p class="empty-state">
-              <span class="empty-emoji">✨</span>
-              Enter a hadith number or keyword to discover
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
   </main>
 
   <!-- Article Reader Modal -->
