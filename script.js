@@ -152,121 +152,6 @@ async function publishArticle(event) {
   reader.readAsDataURL(imageFile);
 }
 
-// Load articles
-async function loadArticles() {
-  try {
-    const querySnapshot = await db.collection("articles")
-      .orderBy("createdAt", "desc")
-      .get();
-    const articles = [];
-
-    querySnapshot.forEach((doc) => {
-      articles.push({
-        id: doc.id,
-        ...doc.data()
-      });
-    });
-
-    const articlesList = document.getElementById("articlesList");
-    articlesList.innerHTML = "";
-
-    if (articles.length === 0) {
-      articlesList.innerHTML = "<p style='color: rgba(212, 165, 116, 0.6); text-align: center;'>No articles published yet.</p>";
-      return;
-    }
-
-    articles.forEach((article) => {
-      const articleCard = document.createElement("div");
-      articleCard.className = "article-card";
-      articleCard.innerHTML = `
-        <img src="${article.image}" alt="${article.title}" style="width: 100%; height: auto; border-radius: 8px; margin-bottom: 1rem;">
-        <h3>${article.title}</h3>
-        <p>${article.content.substring(0, 100)}...</p>
-        <div class="article-meta">
-          <div>
-            <div style="color: var(--accent-gold);">By ${article.author}</div>
-            <div>${article.date}</div>
-          </div>
-          <button class="delete-btn" onclick="deleteArticle('${article.id}')">Delete</button>
-        </div>
-      `;
-      articlesList.appendChild(articleCard);
-    });
-  } catch (error) {
-    console.error("Error loading articles:", error);
-    const articlesList = document.getElementById("articlesList");
-    articlesList.innerHTML = "<p style='color: red; text-align: center;'>Error loading articles</p>";
-  }
-}
-
-// Delete article
-async function deleteArticle(docId) {
-  if (confirm("Are you sure you want to delete this article?")) {
-    try {
-      await db.collection("articles").doc(docId).delete();
-      loadArticles();
-      displayHomeArticles();
-    } catch (error) {
-      console.error("Error deleting article:", error);
-      alert("Error deleting article");
-    }
-  }
-}
-
-// Display articles on home page (latest 3 only)
-async function displayHomeArticles() {
-  try {
-    const querySnapshot = await db.collection("articles")
-      .orderBy("createdAt", "desc")
-      .get();
-    const articles = [];
-
-    querySnapshot.forEach((doc) => {
-      articles.push({
-        id: doc.id,
-        ...doc.data()
-      });
-    });
-
-    const articlesList = document.getElementById("homeArticlesList");
-    if (!articlesList) return;
-
-    articlesList.innerHTML = "";
-
-    // Show only latest 3
-    const latestArticles = articles.slice(0, 3);
-
-    if (latestArticles.length === 0) {
-      articlesList.innerHTML = "<p class='home-articles-empty'>No articles published yet. Check back soon!</p>";
-      return;
-    }
-
-    latestArticles.forEach((article) => {
-      const articleCard = document.createElement("div");
-      articleCard.className = "home-article-card";
-      articleCard.onclick = () => openArticleReader(article);
-
-      articleCard.innerHTML = `
-        <img src="${article.image}" alt="${article.title}" class="home-article-image">
-        <div class="home-article-content">
-          <h3>${article.title}</h3>
-          <p>${article.content}</p>
-          <div class="home-article-meta">
-            <div>
-              <div class="home-article-author">By ${article.author}</div>
-              <div>${article.date}</div>
-            </div>
-          </div>
-        </div>
-      `;
-      articlesList.appendChild(articleCard);
-    });
-  } catch (error) {
-    console.error("Error displaying home articles:", error);
-  }
-}
-
-// Open article reader modal
 function openArticleReader(article) {
   const modal = document.getElementById("articleReaderModal");
   const content = document.getElementById("articleReaderContent");
@@ -361,6 +246,7 @@ document.addEventListener("click", (e) => {
 // Load articles on page load
 document.addEventListener("DOMContentLoaded", () => {
   displayHomeArticles();
+  displayHomeNews();
 });
 
 // Close modals when clicking outside
@@ -390,6 +276,14 @@ window.openMoreArticles = openMoreArticles;
 window.closeMoreArticles = closeMoreArticles;
 window.closeArticleReader = closeArticleReader;
 window.openArticleReader = openArticleReader;
+window.publishNews = publishNews;
+window.loadNews = loadNews;
+window.deleteNews = deleteNews;
+window.displayHomeNews = displayHomeNews;
+window.openNewsReader = openNewsReader;
+window.closeNewsReader = closeNewsReader;
+window.openMoreNews = openMoreNews;
+window.closeMoreNews = closeMoreNews;
 window.loadHadith = loadHadith;
 window.clearSearchResults = clearSearchResults;
 window.loadResultHadith = loadResultHadith;
