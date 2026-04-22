@@ -434,6 +434,7 @@ function clearSearchResults() {
 // Reset search - clear everything and go back to initial state
 function resetSearch() {
   document.getElementById("hadithId").value = "";
+  document.getElementById("hadithCard").style.display = "block";
   document.getElementById("hadithCard").innerHTML = `
     <div class="card-content">
       <p class="empty-state">
@@ -546,7 +547,11 @@ async function searchHadithByKeyword(keyword) {
 async function displaySearchResults(results, collection) {
   const resultsDiv = document.getElementById("searchResults");
   const resultsList = document.getElementById("resultsList");
+  const hadithCard = document.getElementById("hadithCard");
   const arabicCollection = collection.replace("eng-", "ara-");
+
+  // Hide the hadith card when showing search results
+  hadithCard.style.display = "none";
 
   resultsList.innerHTML = results.map(hadith => `
     <div class="result-item" onclick="loadResultHadith(${hadith.hadithnumber}, '${collection}')">
@@ -560,6 +565,9 @@ async function displaySearchResults(results, collection) {
 
 // Load a hadith from search results
 async function loadResultHadith(hadithNumber, collection) {
+  const hadithCard = document.getElementById("hadithCard");
+  hadithCard.style.display = "block";
+
   const arabicCollection = collection.replace("eng-", "ara-");
   const englishData = await getHadith(collection, hadithNumber);
   const arabicData = await getHadith(arabicCollection, hadithNumber);
@@ -589,6 +597,9 @@ async function loadHadith() {
   if (isNumericSearch(input)) {
     // Numeric search
     const id = parseInt(input);
+    const card = document.getElementById("hadithCard");
+    card.style.display = "block";
+
     spinner.classList.remove("hidden");
     card.innerHTML = `
       <div class="card-content">
