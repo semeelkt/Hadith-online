@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Study - Al-muhaddith</title>
+  <link rel="icon" type="image/png" href="Black_Minimalist_Elegant_Mosque_Islamic_Logo-removebg-preview (1).png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="study.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="navbar-content">
+      <div class="navbar-logo">
+        <img src="Untitled_design-removebg-preview (1).png" alt="Al-muhaddith" class="logo-image">
+        <h1>Al-muhaddith</h1>
+      </div>
+
+      <button class="hamburger-menu" id="hamburgerMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="navbar-nav" id="navbarNav">
+        <a href="index.html" class="nav-link">Home</a>
+        <a href="#" class="nav-link">About Us</a>
+        <a href="#" class="nav-link">Sihah Sittah</a>
+        <a href="study.html" class="nav-link active">Study</a>
+        <a href="#" class="nav-link">Contact</a>
+        <button id="adminCircle" class="admin-circle" title="Admin Panel"><i class="bi bi-gear-fill"></i></button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Study Modal -->
+    <div class="study-modal" id="studyModal">
+      <div class="study-modal-content">
+        <div class="modal-header">
+          <div class="modal-title-section">
+            <i class="bi bi-book-half"></i>
+            <div>
+              <h2>Study</h2>
+              <p>Learn the history, methodology and sciences of Hadith</p>
+            </div>
+          </div>
+          <button class="modal-close" onclick="closeStudyModal()">✕</button>
+        </div>
+
+        <div class="study-container">
+          <!-- Sidebar Navigation -->
+          <aside class="study-sidebar">
+            <!-- History Section -->
+            <div class="sidebar-section">
+              <h4>HISTORY</h4>
+              <ul class="sidebar-menu">
+                <li><a href="#" data-section="history-of-hadith" class="sidebar-link active"><i class="bi bi-file-earmark"></i> History of Hadith</a></li>
+                <li><a href="#" data-section="timeline" class="sidebar-link"><i class="bi bi-clock-history"></i> Timeline</a></li>
+              </ul>
+            </div>
+
+            <!-- Methodology Section -->
+            <div class="sidebar-section">
+              <h4>METHODOLOGY</h4>
+              <ul class="sidebar-menu">
+                <li><a href="#" data-section="introduction" class="sidebar-link"><i class="bi bi-book"></i> Introduction</a></li>
+                <li><a href="#" data-section="categories" class="sidebar-link"><i class="bi bi-list"></i> Categories</a></li>
+                <li><a href="#" data-section="conditions" class="sidebar-link"><i class="bi bi-check2-circle"></i> Conditions</a></li>
+                <li><a href="#" data-section="types" class="sidebar-link"><i class="bi bi-diagram-3"></i> Types</a></li>
+                <li><a href="#" data-section="technical-terms" class="sidebar-link"><i class="bi bi-bookmark"></i> Technical Terms</a></li>
+              </ul>
+            </div>
+
+            <!-- Sciences Section -->
+            <div class="sidebar-section">
+              <h4>SCIENCES</h4>
+              <ul class="sidebar-menu">
+                <li><a href="#" data-section="sciences-of-hadith" class="sidebar-link"><i class="bi bi-lightbulb"></i> Sciences of Hadith</a></li>
+                <li><a href="#" data-section="rijal-al-hadith" class="sidebar-link"><i class="bi bi-people"></i> Rijal al-Hadith</a></li>
+                <li><a href="#" data-section="jarh-wa-tadil" class="sidebar-link"><i class="bi bi-exclamation-triangle"></i> Jarh wa Ta'dil</a></li>
+                <li><a href="#" data-section="ilal-al-hadith" class="sidebar-link"><i class="bi bi-question-circle"></i> 'Ilal al-Hadith</a></li>
+                <li><a href="#" data-section="mustalah-al-hadith" class="sidebar-link"><i class="bi bi-tags"></i> Mustalah al-Hadith</a></li>
+              </ul>
+            </div>
+
+            <!-- Resources Section -->
+            <div class="sidebar-section">
+              <h4>RESOURCES</h4>
+              <ul class="sidebar-menu">
+                <li><a href="#" data-section="books" class="sidebar-link"><i class="bi bi-book"></i> Books</a></li>
+                <li><a href="#" data-section="articles" class="sidebar-link"><i class="bi bi-newspaper"></i> Articles</a></li>
+                <li><a href="#" data-section="lectures" class="sidebar-link"><i class="bi bi-play-circle"></i> Lectures</a></li>
+                <li><a href="#" data-section="pdfs" class="sidebar-link"><i class="bi bi-file-pdf"></i> PDFs</a></li>
+              </ul>
+            </div>
+          </aside>
+
+          <!-- Main Content Area -->
+          <div class="study-content">
+            <!-- Overview Tab (Default/Home) -->
+            <div id="overview-section" class="study-section active">
+              <h2>Overview</h2>
+              <p class="overview-intro">Hadith is the second source of Islamic law and guidance after the Qur'an. It contains the sayings, actions, approvals, and characteristics of the Prophet Muhammad ﷺ.</p>
+
+              <div class="overview-image-container">
+                <img src="https://images.unsplash.com/photo-1507842217343-583f20270319?w=600&h=400&fit=crop" alt="Islamic Books" class="overview-image">
+              </div>
+
+              <h3>Stages of Hadith Preservation</h3>
+              <div class="preservation-stages">
+                <div class="stage">
+                  <div class="stage-icon" style="background: #d4f1e8;">
+                    <i class="bi bi-chat-dots" style="color: #059669; font-size: 1.75rem;"></i>
+                  </div>
+                  <p class="stage-title">1. Revelation</p>
+                  <p class="stage-subtitle">(610–632 CE)</p>
+                </div>
+                <div class="stage-arrow">→</div>
+                <div class="stage">
+                  <div class="stage-icon" style="background: #fef3c7;">
+                    <i class="bi bi-people-fill" style="color: #d97706; font-size: 1.75rem;"></i>
+                  </div>
+                  <p class="stage-title">2. Memorization</p>
+                  <p class="stage-subtitle">by Companions</p>
+                </div>
+                <div class="stage-arrow">→</div>
+                <div class="stage">
+                  <div class="stage-icon" style="background: #fce7f3;">
+                    <i class="bi bi-pencil-square" style="color: #be185d; font-size: 1.75rem;"></i>
+                  </div>
+                  <p class="stage-title">3. Written Records</p>
+                  <p class="stage-subtitle">(1st–2nd Century AH)</p>
+                </div>
+                <div class="stage-arrow">→</div>
+                <div class="stage">
+                  <div class="stage-icon" style="background: #dbeafe;">
+                    <i class="bi bi-archive" style="color: #1e40af; font-size: 1.75rem;"></i>
+                  </div>
+                  <p class="stage-title">4. Compilation</p>
+                  <p class="stage-subtitle">(2nd–3rd Century AH)</p>
+                </div>
+                <div class="stage-arrow">→</div>
+                <div class="stage">
+                  <div class="stage-icon" style="background: #e9d5ff;">
+                    <i class="bi bi-shield-check" style="color: #7c3aed; font-size: 1.75rem;"></i>
+                  </div>
+                  <p class="stage-title">5. Classification</p>
+                  <p class="stage-subtitle">and Authentication</p>
+                </div>
+              </div>
+
+              <h3>Categories of Hadith</h3>
+              <div class="categories-grid">
+                <div class="category-card">
+                  <h4 style="color: #059669;">Sahih</h4>
+                  <p class="category-level">Sound</p>
+                  <p>Meets all conditions of authenticity</p>
+                </div>
+                <div class="category-card">
+                  <h4 style="color: #d97706;">Hasan</h4>
+                  <p class="category-level">Good</p>
+                  <p>Slightly less than Sahih</p>
+                </div>
+                <div class="category-card">
+                  <h4 style="color: #dc2626;">Da'if</h4>
+                  <p class="category-level">Weak</p>
+                  <p>Does not meet all conditions</p>
+                </div>
+                <div class="category-card">
+                  <h4 style="color: #9333ea;">Maudu'</h4>
+                  <p class="category-level">Fabricated</p>
+                  <p>Invented and false</p>
+                </div>
+              </div>
+
+              <div class="overview-grid">
+                <div class="overview-box">
+                  <h3>Six Books (Sihah Sittah)</h3>
+                  <ul class="books-list">
+                    <li><i class="bi bi-book-fill"></i> 1. Sahih al-Bukhari</li>
+                    <li><i class="bi bi-book-fill"></i> 2. Sahih Muslim</li>
+                    <li><i class="bi bi-book-fill"></i> 3. Sunan Abu Dawud</li>
+                    <li><i class="bi bi-book-fill"></i> 4. Sunan at-Tirmidhi</li>
+                    <li><i class="bi bi-book-fill"></i> 5. Sunan an-Nasa'i</li>
+                    <li><i class="bi bi-book-fill"></i> 6. Sunan Ibn Majah</li>
+                  </ul>
+                  <a href="#" class="explore-link">Explore All Books →</a>
+                </div>
+
+                <div class="overview-box">
+                  <h3>Importance of Studying Hadith</h3>
+                  <ul class="importance-list">
+                    <li><i class="bi bi-check-circle-fill"></i> Preserves the Sunnah of the Prophet ﷺ</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Guides us in every aspect of life</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Strengthens faith and understanding</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Protects from innovations and misguidance</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- History of Hadith Section -->
+            <div id="history-of-hadith-section" class="study-section">
+              <h2>History of Hadith</h2>
+              <p>The history of Hadith encompasses the collection, preservation, and authentication of the sayings and actions of Prophet Muhammad ﷺ.</p>
+
+              <h3>Origin of Hadith</h3>
+              <p>From the time of the Prophet Muhammad ﷺ (610-632 CE), his companions meticulously preserved his words, actions, and approvals. This tradition continued through generations, developing into a sophisticated science of authentication and classification.</p>
+
+              <h3>Stages of Hadith Preservation</h3>
+              <ul class="content-list">
+                <li><strong>Oral Transmission (610-632 CE):</strong> Companions memorized and recited hadith from the Prophet ﷺ</li>
+                <li><strong>Memorization Era (632-750 CE):</strong> Knowledge preserved through hafiz (memorizers)</li>
+                <li><strong>Written Collection (750-850 CE):</strong> Systematic recording of hadith in books</li>
+                <li><strong>Compilation and Verification (850-950 CE):</strong> Major hadith collections compiled by scholars</li>
+                <li><strong>Classification and Science (950 CE-Present):</strong> Development of hadith criticism and methodology</li>
+              </ul>
+
+              <h3>Key Scholars in Hadith History</h3>
+              <div class="scholars-grid">
+                <div class="scholar-card">
+                  <h4>Bukhari (194-256 AH)</h4>
+                  <p>Compiled Sahih al-Bukhari, known as the most authentic hadith collection</p>
+                </div>
+                <div class="scholar-card">
+                  <h4>Muslim (206-261 AH)</h4>
+                  <p>Compiled Sahih Muslim, the second most authentic collection</p>
+                </div>
+                <div class="scholar-card">
+                  <h4>At-Tirmidhi (209-279 AH)</h4>
+                  <p>Known for his classifications and commentary work on hadith</p>
+                </div>
+                <div class="scholar-card">
+                  <h4>Ibn Majah (209-273 AH)</h4>
+                  <p>Compiled Sunan Ibn Majah with focus on practical Islamic jurisprudence</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timeline Section -->
+            <div id="timeline-section" class="study-section">
+              <h2>Timeline of Hadith Development</h2>
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="timeline-date">610-632 CE</div>
+                  <div class="timeline-content">
+                    <h4>Revelation Period</h4>
+                    <p>Prophet Muhammad ﷺ teaches and companions memorize hadith</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-date">632-750 CE</div>
+                  <div class="timeline-content">
+                    <h4>Era of Companions</h4>
+                    <p>Companions transmit hadith through oral tradition</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-date">750-850 CE</div>
+                  <div class="timeline-content">
+                    <h4>Written Recording</h4>
+                    <p>Hadith begin to be systematically written and compiled</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-date">850-950 CE</div>
+                  <div class="timeline-content">
+                    <h4>Major Collections</h4>
+                    <p>Bukhari, Muslim, and other compilers produce major hadith works</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-date">950-1400 CE</div>
+                  <div class="timeline-content">
+                    <h4>Science Development</h4>
+                    <p>Hadith methodology and sciences become well-established disciplines</p>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="timeline-date">1400-Present</div>
+                  <div class="timeline-content">
+                    <h4>Modern Era</h4>
+                    <p>Digital preservation and global accessibility of hadith collections</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Introduction Section -->
+            <div id="introduction-section" class="study-section">
+              <h2>Introduction to Hadith Methodology</h2>
+              <p>Hadith methodology (Ulum al-Hadith) is the science that deals with the principles, rules, and methods for authenticating and classifying hadith.</p>
+
+              <h3>Definition and Importance of Hadith</h3>
+              <p><strong>Hadith (الحديث):</strong> Literally means "a piece of news" or "a report." In Islamic terminology, it refers to the sayings, actions, approvals, and characteristics of Prophet Muhammad ﷺ.</p>
+
+              <p><strong>Importance:</strong></p>
+              <ul class="content-list">
+                <li>Hadith is the second source of Islamic law after the Qur'an</li>
+                <li>Clarifies and explains the teachings of the Qur'an</li>
+                <li>Provides practical examples of Islamic principles</li>
+                <li>Guides believers in matters of worship and conduct</li>
+              </ul>
+
+              <h3>Why Study Hadith Methodology?</h3>
+              <p>Understanding hadith methodology helps us:</p>
+              <ul class="content-list">
+                <li>Distinguish authentic hadith from weak or fabricated ones</li>
+                <li>Understand the chain of narration and its reliability</li>
+                <li>Apply hadith correctly in Islamic jurisprudence</li>
+                <li>Protect ourselves from misguidance and false teachings</li>
+              </ul>
+            </div>
+
+            <!-- Categories Section -->
+            <div id="categories-section" class="study-section">
+              <h2>Categories of Hadith</h2>
+              <p>Hadith are classified into several categories based on their authenticity and chain of narration:</p>
+
+              <div class="categories-detail">
+                <div class="category-detail-card">
+                  <h3 style="color: #059669;">Sahih (صحيح) - Sound/Authentic</h3>
+                  <p><strong>Definition:</strong> Contains only trustworthy narrators with unbroken chains and lacks defects.</p>
+                  <p><strong>Conditions:</strong></p>
+                  <ul>
+                    <li>Complete chain of narrators (sanad)</li>
+                    <li>All narrators must be just and reliable (adil wa dabit)</li>
+                    <li>No logical contradiction with other authentic sources</li>
+                    <li>Free from hidden defects ('ilal)</li>
+                  </ul>
+                </div>
+
+                <div class="category-detail-card">
+                  <h3 style="color: #d97706;">Hasan (حسن) - Good/Fair</h3>
+                  <p><strong>Definition:</strong> Slightly below sahih, but still reliable enough for practice.</p>
+                  <p><strong>Characteristics:</strong></p>
+                  <ul>
+                    <li>Complete chain of narrators</li>
+                    <li>Narrators are generally trustworthy but may have slight weaknesses</li>
+                    <li>Can be used as evidence in Islamic law</li>
+                  </ul>
+                </div>
+
+                <div class="category-detail-card">
+                  <h3 style="color: #dc2626;">Da'if (ضعيف) - Weak</h3>
+                  <p><strong>Definition:</strong> Does not meet the conditions for sahih or hasan.</p>
+                  <p><strong>Reasons for weakness:</strong></p>
+                  <ul>
+                    <li>Broken chain of narration</li>
+                    <li>Unreliable or unknown narrators</li>
+                    <li>Presence of hidden defects</li>
+                  </ul>
+                </div>
+
+                <div class="category-detail-card">
+                  <h3 style="color: #9333ea;">Maudu' (موضوع) - Fabricated/False</h3>
+                  <p><strong>Definition:</strong> Not actually spoken or done by the Prophet ﷺ.</p>
+                  <p><strong>Characteristics:</strong></p>
+                  <ul>
+                    <li>Completely fabricated and attributed falsely</li>
+                    <li>Cannot be used in any Islamic ruling</li>
+                    <li>Must be warned against and rejected</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Conditions Section -->
+            <div id="conditions-section" class="study-section">
+              <h2>Conditions of Hadith Acceptance</h2>
+              <p>For a hadith to be accepted as authentic (sahih), it must meet specific conditions:</p>
+
+              <div class="conditions-list">
+                <div class="condition-item">
+                  <h3>1. Complete Chain of Narration (Ittisal as-Sanad)</h3>
+                  <p>Each narrator must directly report from the previous narrator with no missing links in the chain.</p>
+                </div>
+
+                <div class="condition-item">
+                  <h3>2. Trustworthiness of Narrators (Adalah)</h3>
+                  <p>All narrators must be known to be truthful, pious, and reliable in transmitting hadith.</p>
+                </div>
+
+                <div class="condition-item">
+                  <h3>3. Precision of Narrators (Dabit)</h3>
+                  <p>Narrators must be known for their accuracy and care in preserving hadith exactly as they received it.</p>
+                </div>
+
+                <div class="condition-item">
+                  <h3>4. Absence of Defects ('Ilal)</h3>
+                  <p>The hadith must be free from hidden defects that would undermine its authenticity despite meeting other conditions.</p>
+                </div>
+
+                <div class="condition-item">
+                  <h3>5. Absence of Contradictions with Stronger Reports (Shadh)</h3>
+                  <p>The hadith should not contradict more authentic hadith on the same subject.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Types Section -->
+            <div id="types-section" class="study-section">
+              <h2>Types of Hadith</h2>
+              <p>Hadith are also classified by their subject matter and form:</p>
+
+              <div class="types-grid">
+                <div class="type-card">
+                  <h3>Hadith Qudsi (الحديث القدسي)</h3>
+                  <p><strong>Words of Allah reporting by the Prophet ﷺ</strong></p>
+                  <p>When the Prophet ﷺ reports the words of Allah but in his own phrasing, not exactly as in the Qur'an.</p>
+                  <p>Example: "I am as My servant expects of me..."</p>
+                </div>
+
+                <div class="type-card">
+                  <h3>Hadith Marfu' (الحديث المرفوع)</h3>
+                  <p><strong>Elevated to the Prophet ﷺ</strong></p>
+                  <p>A statement attributed directly to the Prophet ﷺ through the chain of narrators.</p>
+                </div>
+
+                <div class="type-card">
+                  <h3>Hadith Mawquf (الحديث الموقوف)</h3>
+                  <p><strong>Stopped at a Companion</strong></p>
+                  <p>A statement or action attributed to a Companion of the Prophet ﷺ, not to the Prophet himself.</p>
+                </div>
+
+                <div class="type-card">
+                  <h3>Hadith Maqtu' (الحديث المقطوع)</h3>
+                  <p><strong>Stopped at a Successor</strong></p>
+                  <p>A statement or action attributed to the Successors (Tabi'in), the generation after the Companions.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Technical Terms Section -->
+            <div id="technical-terms-section" class="study-section">
+              <h2>Hadith Technical Terms (Mustalah al-Hadith)</h2>
+              <p>Understanding key terms helps in hadith study and authentication:</p>
+
+              <div class="terms-list">
+                <div class="term">
+                  <h4>Isnad (إسناد) - Chain of Narration</h4>
+                  <p>The chain of narrators through which a hadith is transmitted back to the Prophet ﷺ or a Companion.</p>
+                </div>
+
+                <div class="term">
+                  <h4>Sanad (السند) - Support</h4>
+                  <p>All the narrators in the chain of transmission before the text of the hadith.</p>
+                </div>
+
+                <div class="term">
+                  <h4>Matn (المتن) - Text</h4>
+                  <p>The actual statement or narrative of the hadith, separate from the chain.</p>
+                </div>
+
+                <div class="term">
+                  <h4>Rawi (الراوي) - Narrator</h4>
+                  <p>An individual who transmits and reports hadith.</p>
+                </div>
+
+                <div class="term">
+                  <h4>Adalah (العدالة) - Trustworthiness</h4>
+                  <p>A narrator's credibility and reliability based on their piety and honesty.</p>
+                </div>
+
+                <div class="term">
+                  <h4>Dabt (الضبط) - Precision</h4>
+                  <p>A narrator's accuracy and careful preservation of the hadith text.</p>
+                </div>
+
+                <div class="term">
+                  <h4>Jarh wa Ta'dil (الجرح والتعديل) - Criticism and Accreditation</h4>
+                  <p>The science of evaluating and judging the credibility of narrators.</p>
+                </div>
+
+                <div class="term">
+                  <h4>'Ilal (العلل) - Hidden Defects</h4>
+                  <p>Non-obvious weaknesses in a hadith that experts identify through careful analysis.</p>
+                </div>
+
+                <div class="term">
+                  <h4>Shadh (الشذوذ) - Singularity</h4>
+                  <p>A hadith reported by one reliable narrator but contradicted by more reliable sources.</p>
+                </div>
+
+                <div class="term">
+                  <h4>Munkar (المنكر) - Disapproved</h4>
+                  <p>A weak hadith that contradicts authentic hadith.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Sciences of Hadith Section -->
+            <div id="sciences-of-hadith-section" class="study-section">
+              <h2>'Ulum al-Hadith (Sciences of Hadith)</h2>
+              <p>The sciences of hadith are various disciplines that help authenticate and understand hadith properly.</p>
+
+              <h3>Major Hadith Sciences:</h3>
+              <ul class="content-list">
+                <li><strong>Ilm al-Isnad (Science of Chains):</strong> Study and analysis of the chain of narrators</li>
+                <li><strong>Ilm al-Riwaya (Science of Transmission):</strong> Methods and rules of transmitting hadith</li>
+                <li><strong>Ilm al-Jarh wa Ta'dil (Science of Criticism and Accreditation):</strong> Evaluation of narrators</li>
+                <li><strong>Ilm al-'Ilal (Science of Hidden Defects):</strong> Identification of subtle weaknesses</li>
+                <li><strong>Ilm al-Naskh (Science of Abrogation):</strong> Understanding which hadith abrogates others</li>
+                <li><strong>Ilm al-Fard (Science of Singularity):</strong> Studying unique hadith narrations</li>
+              </ul>
+
+              <h3>Importance of Hadith Sciences</h3>
+              <ul class="content-list">
+                <li>Ensure accuracy and authenticity of hadith</li>
+                <li>Protect Islamic jurisprudence from unreliable sources</li>
+                <li>Enable proper interpretation and application of hadith</li>
+                <li>Serve as defense against fabricated and false reports</li>
+              </ul>
+            </div>
+
+            <!-- Rijal al-Hadith Section -->
+            <div id="rijal-al-hadith-section" class="study-section">
+              <h2>Rijal al-Hadith (Biographical Study of Narrators)</h2>
+              <p>Rijal al-Hadith is the science of studying the biographies, reliability, and characteristics of hadith narrators.</p>
+
+              <h3>Objectives:</h3>
+              <ul class="content-list">
+                <li>Determine the trustworthiness and precision of narrators</li>
+                <li>Verify the reliability of chains of transmission</li>
+                <li>Identify weak, unreliable, or fabricating narrators</li>
+                <li>Establish biographical information about narrators</li>
+              </ul>
+
+              <h3>Criteria for Evaluating Narrators:</h3>
+              <div class="evaluation-grid">
+                <div class="evaluation-item">
+                  <h4>Piety and Righteousness (Taqwa)</h4>
+                  <p>The narrator must be known for their Islamic conduct and moral integrity</p>
+                </div>
+                <div class="evaluation-item">
+                  <h4>Knowledge and Expertise</h4>
+                  <p>The narrator must understand hadith and be capable of accurate transmission</p>
+                </div>
+                <div class="evaluation-item">
+                  <h4>Precision and Memory (Dabt)</h4>
+                  <p>Known for careful preservation and accurate reporting of hadith</p>
+                </div>
+                <div class="evaluation-item">
+                  <h4>Teacher and Students</h4>
+                  <p>Study the circle of teachers and students to verify authenticity</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Jarh wa Ta'dil Section -->
+            <div id="jarh-wa-tadil-section" class="study-section">
+              <h2>Jarh wa Ta'dil (Criticism and Accreditation of Narrators)</h2>
+              <p>This science deals with praising reliable narrators and criticizing unreliable ones.</p>
+
+              <h3>Jarh (الجرح) - Criticism/Impugnation</h3>
+              <p>Criticizing a narrator for unreliability, poor memory, dishonesty, or other defects.</p>
+              <p><strong>Categories of Jarh:</strong></p>
+              <ul class="content-list">
+                <li>Liar or Mithbat (known to fabricate hadith)</li>
+                <li>Weak memory (poor precision in transmission)</li>
+                <li>Hidden defects in transmission</li>
+                <li>Unknown reliability (majhul al-hal)</li>
+              </ul>
+
+              <h3>Ta'dil (التعديل) - Accreditation/Praise</h3>
+              <p>Praising and establishing the reliability of trustworthy narrators.</p>
+              <p><strong>Levels of Ta'dil:</strong></p>
+              <ul class="content-list">
+                <li>Thiqah (Reliable) - Completely trustworthy narrator</li>
+                <li>Saduq (Truthful) - Generally reliable with minor weaknesses</li>
+                <li>Hasan al-Hadith (Good in hadith) - Acceptable for hadith transmission</li>
+              </ul>
+
+              <h3>Importance:</h3>
+              <p>Understanding jarh and ta'dil helps us judge the quality of hadith based on the narrators' credibility.</p>
+            </div>
+
+            <!-- 'Ilal al-Hadith Section -->
+            <div id="ilal-al-hadith-section" class="study-section">
+              <h2>'Ilal al-Hadith (Hidden Defects in Hadith)</h2>
+              <p>'Ilal (defects) are hidden weaknesses in a hadith that are not obvious at first glance but discovered through careful analysis.</p>
+
+              <h3>Types of Defects:</h3>
+              <div class="defects-list">
+                <div class="defect-item">
+                  <h4>Broken Chain (Inqita' al-Sanad)</h4>
+                  <p>When a narrator in the chain did not actually hear from the person before them</p>
+                </div>
+                <div class="defect-item">
+                  <h4>Shadh (Singularity)</h4>
+                  <p>A reliable narrator reports something contradicting more reliable narrators</p>
+                </div>
+                <div class="defect-item">
+                  <h4>Munkar (Disapproved/Objectionable)</h4>
+                  <p>A weak narrator's hadith that contradicts stronger evidence</p>
+                </div>
+                <div class="defect-item">
+                  <h4>Mu'allal (Defective)</h4>
+                  <p>A hadith that appears sound but has a hidden defect preventing its acceptance</p>
+                </div>
+              </div>
+
+              <h3>Process of Detecting Defects:</h3>
+              <ul class="content-list">
+                <li>Comparing multiple chains reporting the same event</li>
+                <li>Analyzing the narrators' reliability and contemporaneity</li>
+                <li>Checking consistency with other authenticated sources</li>
+                <li>Studying scholarly criticism and commentary</li>
+              </ul>
+            </div>
+
+            <!-- Mustalah al-Hadith Section -->
+            <div id="mustalah-al-hadith-section" class="study-section">
+              <h2>Mustalah al-Hadith (Hadith Terminology)</h2>
+              <p>Understanding hadith terminology is fundamental to proper hadith study and classification.</p>
+
+              <h3>Essential Terminology:</h3>
+              <div class="terminology-list">
+                <div class="term-definition">
+                  <h4>Mutawatir (متواتر) - Continuous/Uninterrupted</h4>
+                  <p>A hadith reported by so many narrators across generations that fabrication is impossible. Has the highest degree of certainty (yaqin).</p>
+                </div>
+
+                <div class="term-definition">
+                  <h4>Ahad (آحاد) - Singular/Single Chain</h4>
+                  <p>A hadith reported by few narrators not reaching the level of tawatur. Does not produce certainty but acceptable as evidence.</p>
+                </div>
+
+                <div class="term-definition">
+                  <h4>Mashhur (مشهور) - Famous/Well-Known</h4>
+                  <p>A hadith reported by three or more narrators but not reaching tawatur level.</p>
+                </div>
+
+                <div class="term-definition">
+                  <h4>'Aziz (عزيز) - Mighty/Rare</h4>
+                  <p>A hadith reported by only two narrators at any stage of the chain.</p>
+                </div>
+
+                <div class="term-definition">
+                  <h4>Gharib (غريب) - Strange/Unique</h4>
+                  <p>A hadith reported through only one chain of narration.</p>
+                </div>
+
+                <div class="term-definition">
+                  <h4>Mursal (مرسل) - Disconnected</h4>
+                  <p>A hadith where the Successor (Tabi'i) directly attributes a statement to the Prophet without mentioning the Companion who heard it.</p>
+                </div>
+
+                <div class="term-definition">
+                  <h4>Mudallus (مدلس) - Hidden/Ambiguous</h4>
+                  <p>When a narrator reports from someone he did not hear from directly, using ambiguous words to hide this.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Books Section -->
+            <div id="books-section" class="study-section">
+              <h2>Recommended Books on Hadith</h2>
+              <div class="resources-grid">
+                <div class="resource-card">
+                  <h4>The Six Books (Sihah Sittah)</h4>
+                  <p>The most authentic hadith collections in Islam. Essential reference for every Muslim scholar.</p>
+                  <ul>
+                    <li>Sahih al-Bukhari - 7,275 hadith</li>
+                    <li>Sahih Muslim - 3,033 hadith</li>
+                    <li>Sunan Abu Dawud - 5,274 hadith</li>
+                    <li>Sunan at-Tirmidhi - 3,956 hadith</li>
+                    <li>Sunan an-Nasa'i - 5,761 hadith</li>
+                    <li>Sunan Ibn Majah - 4,341 hadith</li>
+                  </ul>
+                </div>
+
+                <div class="resource-card">
+                  <h4>Usul al-Hadith (Hadith Principles)</h4>
+                  <p>Foundational texts on hadith methodology and authentication.</p>
+                  <ul>
+                    <li>Muqaddimah Ibn as-Salah</li>
+                    <li>Nukhbat al-Fikar by Ibn Hajar</li>
+                    <li>Al-Baiquniyyah (Poem on Hadith Terms)</li>
+                  </ul>
+                </div>
+
+                <div class="resource-card">
+                  <h4>Rijal al-Hadith Works</h4>
+                  <p>Biographies and evaluations of hadith narrators.</p>
+                  <ul>
+                    <li>Tahdhib al-Tahdhib by Ibn Hajar</li>
+                    <li>Taqrib al-Tahdhib by Ibn Hajar</li>
+                    <li>Tahdib al-Kamal by Al-Mizzi</li>
+                  </ul>
+                </div>
+
+                <div class="resource-card">
+                  <h4>Modern Hadith Studies</h4>
+                  <p>Contemporary scholarly works in English and other languages.</p>
+                  <ul>
+                    <li>Muhammad Mustafa Al-Azami - Studies in Hadith Methodology</li>
+                    <li>Jonathan A.C. Brown - The Canonization of al-Bukhari and Muslim</li>
+                    <li>Various translations of the Six Books</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Articles Section -->
+            <div id="articles-section" class="study-section">
+              <h2>Academic Articles and Papers</h2>
+              <p>Explore scholarly articles on hadith sciences and methodology:</p>
+              <div class="resources-grid">
+                <div class="resource-card">
+                  <h4>Hadith Authentication Methodologies</h4>
+                  <p>Various approaches to determining hadith authenticity developed by classical scholars.</p>
+                </div>
+                <div class="resource-card">
+                  <h4>Comparative Study of Hadith Collections</h4>
+                  <p>Analysis of differences and similarities between the Six Books and other collections.</p>
+                </div>
+                <div class="resource-card">
+                  <h4>Digital Preservation of Hadith</h4>
+                  <p>Modern technology in preserving and organizing Islamic heritage.</p>
+                </div>
+                <div class="resource-card">
+                  <h4>Hadith Narrators: Historical and Biographical</h4>
+                  <p>Detailed study of prominent hadith narrators through Islamic history.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Lectures Section -->
+            <div id="lectures-section" class="study-section">
+              <h2>Video Lectures and Learning Resources</h2>
+              <p>Access comprehensive video lectures on hadith sciences:</p>
+              <div class="resources-grid">
+                <div class="resource-card">
+                  <h4>Introduction to Hadith Sciences</h4>
+                  <p>Beginner-friendly lectures covering the fundamentals of hadith study and authentication.</p>
+                </div>
+                <div class="resource-card">
+                  <h4>Advanced Hadith Methodology</h4>
+                  <p>In-depth lectures on complex hadith principles and advanced authentication techniques.</p>
+                </div>
+                <div class="resource-card">
+                  <h4>Lives of Hadith Scholars</h4>
+                  <p>Biographical lectures on the lives and works of major hadith compilers and scholars.</p>
+                </div>
+                <div class="resource-card">
+                  <h4>Six Books Detailed Study</h4>
+                  <p>Comprehensive lectures covering each of the Six Books (Sihah Sittah) individually.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- PDFs Section -->
+            <div id="pdfs-section" class="study-section">
+              <h2>Downloadable Study Materials (PDFs)</h2>
+              <p>Access downloadable resources for offline study:</p>
+              <div class="resources-grid">
+                <div class="resource-card">
+                  <h4>Hadith Terminology Glossary</h4>
+                  <p>Complete glossary of hadith terms with definitions and examples.</p>
+                  <button class="download-btn"><i class="bi bi-download"></i> Download PDF</button>
+                </div>
+                <div class="resource-card">
+                  <h4>Study Guide to Mustalah al-Hadith</h4>
+                  <p>Comprehensive study guide organized by topic for hadith terminology.</p>
+                  <button class="download-btn"><i class="bi bi-download"></i> Download PDF</button>
+                </div>
+                <div class="resource-card">
+                  <h4>Narrator Evaluation Chart</h4>
+                  <p>Quick reference chart for evaluating hadith narrators.</p>
+                  <button class="download-btn"><i class="bi bi-download"></i> Download PDF</button>
+                </div>
+                <div class="resource-card">
+                  <h4>Hadith Sciences Quick Reference</h4>
+                  <p>Quick reference guide covering all major hadith sciences.</p>
+                  <button class="download-btn"><i class="bi bi-download"></i> Download PDF</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section university-section">
+        <div class="university-info">
+          <h3>Darul Huda Islamic University</h3>
+          <p class="department-name">Hadith and Related Science Department</p>
+          <p class="footer-description">Preserving authentic Islamic knowledge through scholarly research and accessible learning resources.</p>
+        </div>
+      </div>
+
+      <div class="footer-section contact-section">
+        <h4>Contact Us</h4>
+        <div class="contact-item">
+          <i class="bi bi-telephone"></i>
+          <span><a href="tel:+919947810116">+91 994 781 0116</a></span>
+        </div>
+        <div class="contact-item">
+          <i class="bi bi-globe"></i>
+          <span><a href="https://www.dhiu.in/" target="_blank">www.dhiu.in</a></span>
+        </div>
+      </div>
+
+      <div class="footer-section links-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html"><i class="bi bi-house"></i> Home</a></li>
+          <li><a href="study.html"><i class="bi bi-book"></i> Study</a></li>
+          <li><a href="#"><i class="bi bi-search"></i> Search Hadith</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section about-section">
+        <h4>About Al-muhaddith</h4>
+        <p>A modern platform dedicated to providing authentic Hadith from the six authentic collections (Sihah Sittah) with contemporary Islamic insights.</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="footer-bottom-content">
+        <p>&copy; 2026 <strong>Al-muhaddith</strong> | Developed by Darul Huda Islamic University</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="study.js"></script>
+</body>
+</html>
