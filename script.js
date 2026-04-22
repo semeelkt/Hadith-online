@@ -421,6 +421,7 @@ async function loadHadith() {
   const id = document.getElementById("hadithId").value;
   const card = document.getElementById("hadithCard");
   const spinner = document.getElementById("loadingSpinner");
+  const collection = document.getElementById("collectionSelect").value;
 
   if (!id) {
     card.innerHTML = '<div class="card-content"><p class="error-state">❌ Please enter a valid hadith number</p></div>';
@@ -437,9 +438,12 @@ async function loadHadith() {
     </div>
   `;
 
+  // Map English collection to Arabic version
+  const arabicCollection = collection.replace("eng-", "ara-");
+
   // Fetch both English and Arabic versions
-  const englishData = await getHadith("eng-bukhari", id);
-  const arabicData = await getHadith("ara-bukhari", id);
+  const englishData = await getHadith(collection, id);
+  const arabicData = await getHadith(arabicCollection, id);
 
   spinner.classList.add("hidden");
 
@@ -459,6 +463,18 @@ async function loadHadith() {
 
   const arabicText = arabicHadith?.text || "Arabic text not available";
 
+  // Get collection name for display
+  const collectionNames = {
+    "eng-bukhari": "Sahih al-Bukhari",
+    "eng-muslim": "Sahih Muslim",
+    "eng-abudawud": "Sunan Abu Dawud",
+    "eng-tirmidhi": "Sunan at-Tirmidhi",
+    "eng-nasai": "Sunan an-Nasa'i",
+    "eng-ibnmajah": "Sunan Ibn Majah"
+  };
+
+  const collectionName = collectionNames[collection] || collection;
+
   card.innerHTML = `
     <div class="card-content hadith-content">
       <span class="hadith-number">Hadith #${englishHadith.hadithnumber}</span>
@@ -472,7 +488,7 @@ async function loadHadith() {
       </div>
 
       <div class="hadith-meta">
-        <span>📖 Sahih al-Bukhari</span>
+        <span>📖 ${collectionName}</span>
         <span>🔍 ID: ${englishHadith.hadithnumber}</span>
       </div>
     </div>

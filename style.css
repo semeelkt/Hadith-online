@@ -82,11 +82,44 @@ body {
 }
 
 .navbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
   color: var(--accent-gold);
   font-size: 0.875rem;
   font-weight: 500;
   letter-spacing: 0.5px;
   text-transform: uppercase;
+}
+
+.collection-select {
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent-gold);
+  border: 1px solid rgba(212, 165, 116, 0.3);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Inter', sans-serif;
+}
+
+.collection-select:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent-gold);
+}
+
+.collection-select:focus {
+  outline: none;
+  border-color: var(--accent-gold);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+}
+
+.collection-select option {
+  background: var(--primary-dark);
+  color: var(--text-light);
 }
 
 /* ============================================
