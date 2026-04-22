@@ -284,19 +284,20 @@ async function displayHomeArticles() {
 
     latestArticles.forEach((article) => {
       const articleCard = document.createElement("div");
-      articleCard.className = "home-article-card";
+      articleCard.className = "article-card-carousel";
       articleCard.onclick = () => openArticleReader(article);
 
       articleCard.innerHTML = `
-        <img src="${article.image}" alt="${article.title}" class="home-article-image">
-        <div class="home-article-content">
-          <h3>${article.title}</h3>
-          <p>${article.content}</p>
-          <div class="home-article-meta">
-            <div>
-              <div class="home-article-author">By ${article.author}</div>
-              <div>${article.date}</div>
+        <img src="${article.image}" alt="${article.title}">
+        <div class="article-card-content">
+          <span class="article-card-badge">Article</span>
+          <h3 class="article-card-title">${article.title}</h3>
+          <p class="article-card-description">${article.content}</p>
+          <div class="article-card-meta">
+            <div class="article-card-author">
+              <span>${article.author}</span>
             </div>
+            <div class="article-card-date">${article.date}</div>
           </div>
         </div>
       `;
@@ -333,6 +334,12 @@ function closeArticleReader() {
 // Open more articles modal
 async function openMoreArticles() {
   try {
+    // Check if db is available
+    if (!db) {
+      alert("Database not initialized. Please wait a moment and try again.");
+      return;
+    }
+
     const querySnapshot = await db.collection("articles")
       .orderBy("createdAt", "desc")
       .get();
@@ -351,7 +358,7 @@ async function openMoreArticles() {
     document.getElementById("allArticlesModal").classList.remove("hidden");
   } catch (error) {
     console.error("Error opening more articles:", error);
-    alert("Error loading articles");
+    alert("Error loading articles. Please try again.");
   }
 }
 
@@ -512,16 +519,20 @@ function clearSearchResults() {
 // Reset search - clear everything and go back to initial state
 function resetSearch() {
   document.getElementById("hadithId").value = "";
-  document.getElementById("hadithCard").style.display = "block";
-  document.getElementById("hadithCard").innerHTML = `
+  const hadithCard = document.getElementById("hadithCard");
+  const cardContainer = document.getElementById("hadithCardContainer");
+  hadithCard.style.display = "block";
+  hadithCard.innerHTML = `
     <div class="card-content">
       <p class="empty-state">
-        <span class="empty-emoji"><i class="bi bi-sparkles"></i></span>
+        <span class="empty-emoji">✨</span>
         Enter a hadith number or keyword to discover
       </p>
     </div>
   `;
+  document.getElementById("loadingSpinner").classList.add("hidden");
   clearSearchResults();
+  cardContainer.classList.add("hidden");
 }
 
 // Display a single hadith
@@ -626,9 +637,11 @@ async function displaySearchResults(results, collection) {
   const resultsDiv = document.getElementById("searchResults");
   const resultsList = document.getElementById("resultsList");
   const hadithCard = document.getElementById("hadithCard");
+  const cardContainer = document.getElementById("hadithCardContainer");
   const arabicCollection = collection.replace("eng-", "ara-");
 
-  // Hide the hadith card when showing search results
+  // Show container and hide the hadith card when showing search results
+  cardContainer.classList.remove("hidden");
   hadithCard.style.display = "none";
 
   resultsList.innerHTML = results.map(hadith => `
@@ -661,21 +674,23 @@ async function loadResultHadith(hadithNumber, collection) {
 // Main load hadith function - handles both number and keyword search
 async function loadHadith() {
   const input = document.getElementById("hadithId").value.trim();
+  const cardContainer = document.getElementById("hadithCardContainer");
   const card = document.getElementById("hadithCard");
   const spinner = document.getElementById("loadingSpinner");
   const collection = currentCollection;
 
   if (!input) {
     card.innerHTML = '<div class="card-content"><p class="error-state"><i class="bi bi-exclamation-circle"></i> Please enter a hadith number or keyword</p></div>';
+    cardContainer.classList.remove("hidden");
     return;
   }
 
   clearSearchResults();
+  cardContainer.classList.remove("hidden");
 
   if (isNumericSearch(input)) {
     // Numeric search
     const id = parseInt(input);
-    const card = document.getElementById("hadithCard");
     card.style.display = "block";
 
     spinner.classList.remove("hidden");
@@ -713,3 +728,28 @@ async function loadHadith() {
     await searchHadithByKeyword(input);
   }
 }
+
+// ============================================
+// EXPORT FUNCTIONS TO GLOBAL SCOPE
+// ============================================
+
+// Make all functions globally accessible
+window.loadHadith = loadHadith;
+window.resetSearch = resetSearch;
+window.clearSearchResults = clearSearchResults;
+window.openMoreArticles = openMoreArticles;
+window.closeMoreArticles = closeMoreArticles;
+window.openArticleReader = openArticleReader;
+window.closeArticleReader = closeArticleReader;
+window.selectCollection = selectCollection;
+window.filterArticles = filterArticles;
+window.publishArticle = publishArticle;
+window.switchTab = switchTab;
+window.loginAdmin = loginAdmin;
+window.logoutAdmin = logoutAdmin;
+window.closeAdminModal = closeAdminModal;
+window.loadArticles = loadArticles;
+window.displayAllArticles = displayAllArticles;
+window.loadResultHadith = loadResultHadith;
+window.displaySearchResults = displaySearchResults;
+window.searchHadithByKeyword = searchHadithByKeyword;

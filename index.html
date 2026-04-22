@@ -16,8 +16,13 @@
   <header class="navbar">
     <div class="navbar-content">
       <div class="navbar-logo">
-        <img src="Untitled_design-removebg-preview (1).png" alt="Al-muhaddith" class="logo-image">
-        <h1>Al-muhaddith</h1>
+        <div class="logo-badge">
+          <i class="bi bi-book-half"></i>
+        </div>
+        <div>
+          <h1>Hadith Library</h1>
+          <p class="logo-tagline">Learn, Read, Benefit</p>
+        </div>
       </div>
 
       <!-- Mobile Menu Toggle -->
@@ -28,13 +33,19 @@
       </button>
 
       <nav class="navbar-nav" id="navbarNav">
-        <a href="#" class="nav-link">Home</a>
-        <a href="#" class="nav-link">About Us</a>
-        <a href="#" class="nav-link">Sihah Sittah</a>
-        <a href="study.html" class="nav-link" id="studyLink">Study</a>
-        <a href="#" class="nav-link">Contact</a>
-        <button id="adminCircle" class="admin-circle" title="Admin Panel"><i class="bi bi-gear-fill"></i></button>
+        <a href="#" class="nav-link active">Home</a>
+        <a href="#" class="nav-link">Hadith</a>
+        <a href="#" class="nav-link">Books (Sihah Sitha)</a>
+        <a href="#" class="nav-link">Articles</a>
+        <a href="study.html" class="nav-link">Study</a>
+        <a href="#" class="nav-link">About</a>
       </nav>
+
+      <div class="navbar-actions">
+        <button class="nav-icon-btn" title="Search"><i class="bi bi-search"></i></button>
+        <button class="nav-icon-btn" title="Dark Mode"><i class="bi bi-moon"></i></button>
+        <button id="adminCircle" class="admin-circle" title="Admin Panel"><i class="bi bi-gear-fill"></i></button>
+      </div>
     </div>
   </header>
 
@@ -81,76 +92,196 @@
 
   <main>
     <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-content">
-        <h2>Authentic Hadith. Clear Understanding.</h2>
-        <p>Search across Sihah Sittah and explore contemporary insights with ease.</p>
+    <section class="hero-new">
+      <div class="hero-container">
+        <!-- Left Side - Quote -->
+        <div class="hero-left">
+          <div class="quote-card">
+            <div class="quote-badge">
+              <i class="bi bi-quote"></i> The Prophet ﷺ said:
+            </div>
+            <p class="quote-text">"I have left among you that which, if you hold fast to it, you will never go astray: the Book of Allah and my Sunnah."</p>
+            <p class="quote-source">- Sahih al-Bukhari 7321</p>
+          </div>
+          <div class="hero-image">
+            <img src="Firefly_Gemini Flash_make a image of old islamic hadees book bg of solid gold rgba(238, 199, 124) 400557.png" alt="Islamic Hadith Books" class="hadith-book-image">
+          </div>
+        </div>
+
+        <!-- Right Side - Search -->
+        <div class="hero-right">
+          <h2>Search Authentic Hadith</h2>
+          <p class="hero-subtitle">Search through 100,000+ hadith from the authentic books of Sihah Sitha.</p>
+
+          <div class="search-section-hero">
+            <div class="search-container-hero">
+              <input
+                type="text"
+                id="hadithId"
+                placeholder="Search hadith by keyword, Arabic or reference..."
+                class="search-input-hero"
+              >
+              <select class="books-filter">
+                <option>All Books</option>
+                <option value="eng-bukhari">Sahih al-Bukhari</option>
+                <option value="eng-muslim">Sahih Muslim</option>
+                <option value="eng-abudawud">Sunan Abu Dawud</option>
+                <option value="eng-tirmidhi">Sunan at-Tirmidhi</option>
+                <option value="eng-nasai">Sunan an-Nasa'i</option>
+                <option value="eng-ibnmajah">Sunan Ibn Majah</option>
+              </select>
+              <button onclick="loadHadith()" class="search-btn-hero">Search</button>
+              <button onclick="resetSearch()" class="reset-btn-hero" title="Clear search">
+                <i class="bi bi-arrow-counterclockwise"></i>
+              </button>
+            </div>
+          </div>
+
+          <p class="browse-text">Or browse by book:</p>
+          <div class="books-browser">
+            <div class="book-option" onclick="selectCollection(this)" data-collection="eng-bukhari">
+              <div class="book-icon book-icon-1"><i class="bi bi-book-fill"></i></div>
+              <p class="book-count">7,563</p>
+              <p class="book-name">Sahih<br>al-Bukhari</p>
+            </div>
+            <div class="book-option" onclick="selectCollection(this)" data-collection="eng-muslim">
+              <div class="book-icon book-icon-2"><i class="bi bi-book-fill"></i></div>
+              <p class="book-count">3,556</p>
+              <p class="book-name">Sahih<br>Muslim</p>
+            </div>
+            <div class="book-option" onclick="selectCollection(this)" data-collection="eng-abudawud">
+              <div class="book-icon book-icon-3"><i class="bi bi-book-fill"></i></div>
+              <p class="book-count">4,800</p>
+              <p class="book-name">Sunan<br>Abu Dawud</p>
+            </div>
+            <div class="book-option" onclick="selectCollection(this)" data-collection="eng-tirmidhi">
+              <div class="book-icon book-icon-4"><i class="bi bi-book-fill"></i></div>
+              <p class="book-count">3,955</p>
+              <p class="book-name">Jami' at<br>Tirmidhi</p>
+            </div>
+            <div class="book-option" onclick="selectCollection(this)" data-collection="eng-nasai">
+              <div class="book-icon book-icon-5"><i class="bi bi-book-fill"></i></div>
+              <p class="book-count">5,726</p>
+              <p class="book-name">Sunan<br>an-Nasa'i</p>
+            </div>
+            <div class="book-option" onclick="selectCollection(this)" data-collection="eng-ibnmajah">
+              <div class="book-icon book-icon-6"><i class="bi bi-book-fill"></i></div>
+              <p class="book-count">4,341</p>
+              <p class="book-name">Sunan<br>Ibn Majah</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Search Section -->
-    <div class="container">
-      <div class="search-section">
-        <div class="search-container">
-          <input
-            type="text"
-            id="hadithId"
-            placeholder="Enter Hadith Number or Keyword"
-            class="search-input"
-          >
-          <button onclick="loadHadith()" class="search-btn">
-            <span>Search</span>
-            <span class="search-icon">→</span>
-          </button>
-          <button onclick="resetSearch()" class="reset-btn" title="Clear search">
-            <span>Reset</span>
-          </button>
+    <!-- Features Section -->
+    <section class="features-section">
+      <div class="features-container">
+        <div class="feature-card">
+          <div class="feature-icon" style="background: #dcfce7;">
+            <i class="bi bi-book-half" style="color: #059669;"></i>
+          </div>
+          <h3>Sihah Sitha Collection</h3>
+          <p>All hadith from the six authentic books with reliable references</p>
         </div>
-        <p class="search-hint">Try: 1, 5, 100 or "prayer", "water", "fasting"</p>
-      </div>
 
-      <!-- Hadith Collections Selector -->
-      <div class="collections-selector">
-        <button class="collection-btn active" data-collection="eng-bukhari" onclick="selectCollection(this)">Sahih al-Bukhari</button>
-        <button class="collection-btn" data-collection="eng-muslim" onclick="selectCollection(this)">Sahih Muslim</button>
-        <button class="collection-btn" data-collection="eng-abudawud" onclick="selectCollection(this)">Sunan Abu Dawud</button>
-        <button class="collection-btn" data-collection="eng-tirmidhi" onclick="selectCollection(this)">Sunan at-Tirmidhi</button>
-        <button class="collection-btn" data-collection="eng-nasai" onclick="selectCollection(this)">Sunan an-Nasa'i</button>
-        <button class="collection-btn" data-collection="eng-ibnmajah" onclick="selectCollection(this)">Sunan Ibn Majah</button>
-      </div>
+        <div class="feature-card">
+          <div class="feature-icon" style="background: #dbeafe;">
+            <i class="bi bi-mortarboard" style="color: #2563eb;"></i>
+          </div>
+          <h3>Study & Learn</h3>
+          <p>Learn hadith history, methodology and Islamic sciences</p>
+        </div>
 
-      <!-- Hadith Display Card -->
-      <div id="hadithCard" class="hadith-card glass-effect">
-        <div class="card-content">
-          <p class="empty-state">
-            <span class="empty-emoji">✨</span>
-            Enter a hadith number or keyword to discover
-          </p>
+        <div class="feature-card">
+          <div class="feature-icon" style="background: #fed7aa;">
+            <i class="bi bi-newspaper" style="color: #c84b31;"></i>
+          </div>
+          <h3>Articles & Insights</h3>
+          <p>Read articles and publications from the community</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: #f3e8ff;">
+            <i class="bi bi-people" style="color: #7c3aed;"></i>
+          </div>
+          <h3>Community</h3>
+          <p>Join a community of learners and contributors</p>
         </div>
       </div>
+    </section>
 
-      <!-- Search Results (for keyword search) -->
-      <div id="searchResults" class="search-results hidden">
-        <div class="results-header">
-          <h3>Search Results</h3>
-          <button class="results-close-btn" onclick="clearSearchResults()">✕</button>
-        </div>
-        <div id="resultsList" class="results-list"></div>
+    <!-- Latest Articles Section -->
+    <section class="latest-articles-section">
+      <div class="articles-header-new">
+        <h2>Latest Articles</h2>
+        <a href="#" onclick="openMoreArticles(); return false;" class="view-all-link">View all articles <i class="bi bi-arrow-right"></i></a>
       </div>
+      <div id="homeArticlesList" class="articles-carousel"></div>
+    </section>
 
-      <!-- Loading Spinner (Hidden by default) -->
-      <div id="loadingSpinner" class="spinner hidden"></div>
+    <!-- Statistics Section -->
+    <section class="stats-section">
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-book-fill"></i>
+          </div>
+          <p class="stat-number">28,000+</p>
+          <p class="stat-label">Total Hadith</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-journal-text"></i>
+          </div>
+          <p class="stat-number">6</p>
+          <p class="stat-label">Authentic Books</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-newspaper"></i>
+          </div>
+          <p class="stat-number">1,250+</p>
+          <p class="stat-label">Articles</p>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="bi bi-people-fill"></i>
+          </div>
+          <p class="stat-number">45,000+</p>
+          <p class="stat-label">Community Members</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Results (for keyword search) -->
+    <div id="searchResults" class="search-results hidden">
+      <div class="results-header">
+        <h3>Search Results</h3>
+        <button class="results-close-btn" onclick="clearSearchResults()">✕</button>
+      </div>
+      <div id="resultsList" class="results-list"></div>
     </div>
 
-    <!-- Published Articles Section -->
-    <div class="articles-section">
-      <div class="articles-header">
-        <h2 class="articles-title"><i class="bi bi-newspaper"></i> insightFlow</h2>
-        <button class="more-articles-btn" onclick="openMoreArticles()">More Articles →</button>
-      </div>
-      <div id="homeArticlesList" class="home-articles-grid"></div>
-    </div>
+    <!-- Loading Spinner (Hidden by default) -->
+    <div id="loadingSpinner" class="spinner hidden"></div>
 
+    <!-- Hadith Card (Hidden by default, shown when search is performed) -->
+    <div id="hadithCardContainer" class="hadith-card-container hidden">
+      <div class="container">
+        <div id="hadithCard" class="hadith-card glass-effect">
+          <div class="card-content">
+            <p class="empty-state">
+              <span class="empty-emoji">✨</span>
+              Enter a hadith number or keyword to discover
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
   <!-- Article Reader Modal -->
