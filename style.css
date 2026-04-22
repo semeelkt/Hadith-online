@@ -134,6 +134,13 @@ body {
   box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
 }
 
+.logo-image {
+  height: 50px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+}
+
 .navbar-logo h1 {
   font-size: 1.25rem;
   font-weight: 700;
