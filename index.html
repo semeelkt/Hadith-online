@@ -153,6 +153,15 @@
     <div class="all-articles-modal-content">
       <button class="modal-close" onclick="closeMoreArticles()">✕</button>
       <h2>All Articles</h2>
+      <div class="articles-search-container">
+        <input
+          type="text"
+          id="articlesSearchInput"
+          placeholder="Search articles by title or author..."
+          class="articles-search-input"
+          onkeyup="filterArticles()"
+        >
+      </div>
       <div id="allArticlesList" class="all-articles-list"></div>
     </div>
   </div>

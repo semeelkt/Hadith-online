@@ -37,6 +37,7 @@ initializeFirebase();
 
 let adminLoggedIn = false;
 const ADMIN_PASSWORD = "mradminlogged";
+let allArticlesData = []; // Store articles for search filtering
 
 // Open admin login modal
 document.getElementById("adminCircle")?.addEventListener("click", () => {
@@ -304,6 +305,8 @@ async function openMoreArticles() {
       });
     });
 
+    allArticlesData = articles; // Store for filtering
+    document.getElementById("articlesSearchInput").value = ""; // Clear search
     displayAllArticles(articles);
     document.getElementById("allArticlesModal").classList.remove("hidden");
   } catch (error) {
@@ -344,6 +347,23 @@ function displayAllArticles(articles) {
 // Close more articles modal
 function closeMoreArticles() {
   document.getElementById("allArticlesModal").classList.add("hidden");
+}
+
+// Filter articles by search query
+function filterArticles() {
+  const searchQuery = document.getElementById("articlesSearchInput").value.toLowerCase();
+
+  if (!searchQuery) {
+    displayAllArticles(allArticlesData);
+    return;
+  }
+
+  const filteredArticles = allArticlesData.filter(article =>
+    article.title.toLowerCase().includes(searchQuery) ||
+    article.author.toLowerCase().includes(searchQuery)
+  );
+
+  displayAllArticles(filteredArticles);
 }
 
 // Close modals when clicking outside
