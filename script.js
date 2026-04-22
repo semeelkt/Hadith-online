@@ -390,6 +390,7 @@ window.openMoreArticles = openMoreArticles;
 window.closeMoreArticles = closeMoreArticles;
 window.closeArticleReader = closeArticleReader;
 window.openArticleReader = openArticleReader;
+window.selectCollection = selectCollection;
 window.loadHadith = loadHadith;
 window.clearSearchResults = clearSearchResults;
 window.loadResultHadith = loadResultHadith;

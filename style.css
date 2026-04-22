@@ -1265,6 +1265,66 @@ body {
 }
 
 /* ============================================
+   ARTICLE READER MODAL
+   ============================================ */
+
+.article-reader-modal-content {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 700px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: slideDown 0.3s ease-out;
+}
+
+.article-reader-content {
+  position: relative;
+  z-index: 1;
+}
+
+.article-reader-content img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.article-reader-content h2 {
+  font-size: 1.75rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.article-reader-content .reader-meta {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.reader-author {
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.article-reader-content .reader-body {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-primary);
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* ============================================
    ALL ARTICLES MODAL
    ============================================ */
 
