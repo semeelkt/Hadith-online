@@ -391,6 +391,9 @@ window.closeMoreArticles = closeMoreArticles;
 window.closeArticleReader = closeArticleReader;
 window.openArticleReader = openArticleReader;
 window.loadHadith = loadHadith;
+window.clearSearchResults = clearSearchResults;
+window.loadResultHadith = loadResultHadith;
+window.resetSearch = resetSearch;
 
 // ============================================
 // HADITH FUNCTIONALITY
@@ -417,53 +420,38 @@ async function getHadith(collection, id) {
   }
 }
 
-async function loadHadith() {
-  const id = document.getElementById("hadithId").value;
-  const card = document.getElementById("hadithCard");
-  const spinner = document.getElementById("loadingSpinner");
-  const collection = document.getElementById("collectionSelect").value;
+// Helper function to determine if input is a number
+function isNumericSearch(input) {
+  return /^\d+$/.test(input.trim());
+}
 
-  if (!id) {
-    card.innerHTML = '<div class="card-content"><p class="error-state">❌ Please enter a valid hadith number</p></div>';
-    return;
-  }
+// Clear search results
+function clearSearchResults() {
+  document.getElementById("searchResults").classList.add("hidden");
+  document.getElementById("resultsList").innerHTML = "";
+}
 
-  spinner.classList.remove("hidden");
-  card.innerHTML = `
+// Reset search - clear everything and go back to initial state
+function resetSearch() {
+  document.getElementById("hadithId").value = "";
+  document.getElementById("hadithCard").innerHTML = `
     <div class="card-content">
       <p class="empty-state">
-        <span class="empty-emoji">⏳</span>
-        Loading hadith...
+        <span class="empty-emoji">✨</span>
+        Enter a hadith number or keyword to discover
       </p>
     </div>
   `;
+  clearSearchResults();
+}
 
-  // Map English collection to Arabic version
-  const arabicCollection = collection.replace("eng-", "ara-");
-
-  // Fetch both English and Arabic versions
-  const englishData = await getHadith(collection, id);
-  const arabicData = await getHadith(arabicCollection, id);
-
-  spinner.classList.add("hidden");
-
-  if (!englishData || !englishData.hadiths) {
-    card.innerHTML = '<div class="card-content"><p class="error-state">⚠️ Hadith not found or API error</p></div>';
-    return;
-  }
-
-  // Find the hadith in the arrays by hadithnumber
-  const englishHadith = englishData.hadiths.find(h => h.hadithnumber === parseInt(id));
-  const arabicHadith = arabicData?.hadiths?.find(h => h.hadithnumber === parseInt(id));
-
-  if (!englishHadith || !englishHadith.text) {
-    card.innerHTML = '<div class="card-content"><p class="error-state">❌ Hadith not found</p></div>';
-    return;
-  }
+// Display a single hadith
+function displayHadith(hadithData, collection) {
+  const card = document.getElementById("hadithCard");
+  const englishHadith = hadithData.english;
+  const arabicHadith = hadithData.arabic;
 
   const arabicText = arabicHadith?.text || "Arabic text not available";
-
-  // Get collection name for display
   const collectionNames = {
     "eng-bukhari": "Sahih al-Bukhari",
     "eng-muslim": "Sahih Muslim",
@@ -472,12 +460,14 @@ async function loadHadith() {
     "eng-nasai": "Sunan an-Nasa'i",
     "eng-ibnmajah": "Sunan Ibn Majah"
   };
-
   const collectionName = collectionNames[collection] || collection;
 
   card.innerHTML = `
     <div class="card-content hadith-content">
-      <span class="hadith-number">Hadith #${englishHadith.hadithnumber}</span>
+      <div class="hadith-actions">
+        <span class="hadith-number">Hadith #${englishHadith.hadithnumber}</span>
+        <button class="hadith-close-btn" onclick="resetSearch()">✕</button>
+      </div>
 
       <div class="hadith-arabic">
         ${arabicText}
@@ -493,4 +483,144 @@ async function loadHadith() {
       </div>
     </div>
   `;
+}
+
+// Search hadiths by keyword
+async function searchHadithByKeyword(keyword) {
+  const card = document.getElementById("hadithCard");
+  const spinner = document.getElementById("loadingSpinner");
+  const collection = document.getElementById("collectionSelect").value;
+  const arabicCollection = collection.replace("eng-", "ara-");
+
+  spinner.classList.remove("hidden");
+  card.innerHTML = `
+    <div class="card-content">
+      <p class="empty-state">
+        <span class="empty-emoji">🔍</span>
+        Searching for "${keyword}"...
+      </p>
+    </div>
+  `;
+
+  try {
+    // Fetch all hadiths from the collection (this uses a single file with all hadiths)
+    const response = await fetch(`https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions/${collection}.min.json`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch collection");
+    }
+
+    const collectionData = await response.json();
+    const allHadiths = collectionData.hadiths || [];
+
+    // Search by text (case-insensitive)
+    const keyword_lower = keyword.toLowerCase();
+    const matches = allHadiths.filter(h =>
+      h.text && h.text.toLowerCase().includes(keyword_lower)
+    ).slice(0, 10); // Limit to 10 results
+
+    spinner.classList.add("hidden");
+
+    if (matches.length === 0) {
+      card.innerHTML = '<div class="card-content"><p class="error-state">❌ No hadiths found matching your search</p></div>';
+      return;
+    }
+
+    if (matches.length === 1) {
+      // If only one match, display it directly
+      const arabicData = await getHadith(arabicCollection, matches[0].hadithnumber);
+      const arabicHadith = arabicData?.hadiths?.find(h => h.hadithnumber === matches[0].hadithnumber);
+      displayHadith({ english: matches[0], arabic: arabicHadith }, collection);
+    } else {
+      // If multiple matches, show results list
+      card.innerHTML = '<div class="card-content"><p class="empty-state">Found ' + matches.length + ' matching hadiths</p></div>';
+      displaySearchResults(matches, collection);
+    }
+  } catch (error) {
+    console.error("Error searching hadiths:", error);
+    spinner.classList.add("hidden");
+    card.innerHTML = '<div class="card-content"><p class="error-state">❌ Error searching hadiths</p></div>';
+  }
+}
+
+// Display search results
+async function displaySearchResults(results, collection) {
+  const resultsDiv = document.getElementById("searchResults");
+  const resultsList = document.getElementById("resultsList");
+  const arabicCollection = collection.replace("eng-", "ara-");
+
+  resultsList.innerHTML = results.map(hadith => `
+    <div class="result-item" onclick="loadResultHadith(${hadith.hadithnumber}, '${collection}')">
+      <div class="result-number">Hadith #${hadith.hadithnumber}</div>
+      <div class="result-text">${hadith.text.substring(0, 150)}...</div>
+    </div>
+  `).join("");
+
+  resultsDiv.classList.remove("hidden");
+}
+
+// Load a hadith from search results
+async function loadResultHadith(hadithNumber, collection) {
+  const arabicCollection = collection.replace("eng-", "ara-");
+  const englishData = await getHadith(collection, hadithNumber);
+  const arabicData = await getHadith(arabicCollection, hadithNumber);
+
+  if (englishData?.hadiths) {
+    const englishHadith = englishData.hadiths.find(h => h.hadithnumber === hadithNumber);
+    const arabicHadith = arabicData?.hadiths?.find(h => h.hadithnumber === hadithNumber);
+    displayHadith({ english: englishHadith, arabic: arabicHadith }, collection);
+    clearSearchResults();
+  }
+}
+
+// Main load hadith function - handles both number and keyword search
+async function loadHadith() {
+  const input = document.getElementById("hadithId").value.trim();
+  const card = document.getElementById("hadithCard");
+  const spinner = document.getElementById("loadingSpinner");
+  const collection = document.getElementById("collectionSelect").value;
+
+  if (!input) {
+    card.innerHTML = '<div class="card-content"><p class="error-state">❌ Please enter a hadith number or keyword</p></div>';
+    return;
+  }
+
+  clearSearchResults();
+
+  if (isNumericSearch(input)) {
+    // Numeric search
+    const id = parseInt(input);
+    spinner.classList.remove("hidden");
+    card.innerHTML = `
+      <div class="card-content">
+        <p class="empty-state">
+          <span class="empty-emoji">⏳</span>
+          Loading hadith...
+        </p>
+      </div>
+    `;
+
+    const arabicCollection = collection.replace("eng-", "ara-");
+    const englishData = await getHadith(collection, id);
+    const arabicData = await getHadith(arabicCollection, id);
+
+    spinner.classList.add("hidden");
+
+    if (!englishData || !englishData.hadiths) {
+      card.innerHTML = '<div class="card-content"><p class="error-state">⚠️ Hadith not found or API error</p></div>';
+      return;
+    }
+
+    const englishHadith = englishData.hadiths.find(h => h.hadithnumber === id);
+    const arabicHadith = arabicData?.hadiths?.find(h => h.hadithnumber === id);
+
+    if (!englishHadith || !englishHadith.text) {
+      card.innerHTML = '<div class="card-content"><p class="error-state">❌ Hadith not found</p></div>';
+      return;
+    }
+
+    displayHadith({ english: englishHadith, arabic: arabicHadith }, collection);
+  } else {
+    // Keyword search
+    await searchHadithByKeyword(input);
+  }
 }

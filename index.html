@@ -86,18 +86,20 @@
       <div class="search-section">
         <div class="search-container">
           <input
-            type="number"
+            type="text"
             id="hadithId"
-            placeholder="Enter Hadith Number"
+            placeholder="Enter Hadith Number or Keyword"
             class="search-input"
-            min="1"
           >
           <button onclick="loadHadith()" class="search-btn">
             <span>Search</span>
             <span class="search-icon">→</span>
           </button>
+          <button onclick="resetSearch()" class="reset-btn" title="Clear search">
+            <span>Reset</span>
+          </button>
         </div>
-        <p class="search-hint">Try: 1, 5, 100</p>
+        <p class="search-hint">Try: 1, 5, 100 or "prayer", "water", "fasting"</p>
       </div>
 
       <!-- Hadith Display Card -->
@@ -105,9 +107,18 @@
         <div class="card-content">
           <p class="empty-state">
             <span class="empty-emoji">✨</span>
-            Enter a hadith number to discover
+            Enter a hadith number or keyword to discover
           </p>
         </div>
+      </div>
+
+      <!-- Search Results (for keyword search) -->
+      <div id="searchResults" class="search-results hidden">
+        <div class="results-header">
+          <h3>Search Results</h3>
+          <button class="results-close-btn" onclick="clearSearchResults()">✕</button>
+        </div>
+        <div id="resultsList" class="results-list"></div>
       </div>
 
       <!-- Loading Spinner (Hidden by default) -->
