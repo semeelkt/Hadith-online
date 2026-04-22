@@ -32,6 +32,46 @@ function initializeFirebase() {
 initializeFirebase();
 
 // ============================================
+// HAMBURGER MENU FUNCTIONALITY
+// ============================================
+
+const hamburgerMenu = document.getElementById("hamburgerMenu");
+const navbarNav = document.getElementById("navbarNav");
+
+if (hamburgerMenu && navbarNav) {
+  hamburgerMenu.addEventListener("click", (e) => {
+    e.stopPropagation();
+    hamburgerMenu.classList.toggle("active");
+    navbarNav.classList.toggle("active");
+  });
+
+  // Close menu when clicking on a nav link
+  document.querySelectorAll(".nav-link").forEach(link => {
+    link.addEventListener("click", () => {
+      hamburgerMenu.classList.remove("active");
+      navbarNav.classList.remove("active");
+    });
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest(".navbar")) {
+      hamburgerMenu.classList.remove("active");
+      navbarNav.classList.remove("active");
+    }
+  });
+}
+
+// Study link handler
+const studyLink = document.getElementById("studyLink");
+if (studyLink) {
+  studyLink.addEventListener("click", (e) => {
+    // Navigates to study.html - update this page path as needed
+    window.location.href = "study.html";
+  });
+}
+
+// ============================================
 // ADMIN FUNCTIONALITY
 // ============================================
 
