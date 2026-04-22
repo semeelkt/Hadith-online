@@ -399,6 +399,26 @@ window.resetSearch = resetSearch;
 // HADITH FUNCTIONALITY
 // ============================================
 
+// Global variable to track selected collection
+let currentCollection = "eng-bukhari";
+
+// Select collection function
+function selectCollection(button) {
+  // Remove active class from all buttons
+  document.querySelectorAll(".collection-btn").forEach(btn => {
+    btn.classList.remove("active");
+  });
+
+  // Add active class to clicked button
+  button.classList.add("active");
+
+  // Update current collection
+  currentCollection = button.getAttribute("data-collection");
+}
+
+// Make selectCollection globally available
+window.selectCollection = selectCollection;
+
 async function getHadith(collection, id) {
   try {
     // Try .min.json first (minified version)
@@ -490,7 +510,7 @@ function displayHadith(hadithData, collection) {
 async function searchHadithByKeyword(keyword) {
   const card = document.getElementById("hadithCard");
   const spinner = document.getElementById("loadingSpinner");
-  const collection = document.getElementById("collectionSelect").value;
+  const collection = currentCollection;
   const arabicCollection = collection.replace("eng-", "ara-");
 
   spinner.classList.remove("hidden");
@@ -585,7 +605,7 @@ async function loadHadith() {
   const input = document.getElementById("hadithId").value.trim();
   const card = document.getElementById("hadithCard");
   const spinner = document.getElementById("loadingSpinner");
-  const collection = document.getElementById("collectionSelect").value;
+  const collection = currentCollection;
 
   if (!input) {
     card.innerHTML = '<div class="card-content"><p class="error-state"><i class="bi bi-exclamation-circle"></i> Please enter a hadith number or keyword</p></div>';

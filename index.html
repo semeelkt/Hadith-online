@@ -20,14 +20,6 @@
         <h1>Al-muhaddith</h1>
       </div>
       <nav class="navbar-nav">
-        <select id="collectionSelect" class="collection-select">
-          <option value="eng-bukhari">Sahih al-Bukhari</option>
-          <option value="eng-muslim">Sahih Muslim</option>
-          <option value="eng-abudawud">Sunan Abu Dawud</option>
-          <option value="eng-tirmidhi">Sunan at-Tirmidhi</option>
-          <option value="eng-nasai">Sunan an-Nasa'i</option>
-          <option value="eng-ibnmajah">Sunan Ibn Majah</option>
-        </select>
         <button id="adminCircle" class="admin-circle" title="Admin Panel"><i class="bi bi-gear-fill"></i></button>
       </nav>
     </div>
@@ -102,6 +94,16 @@
           </button>
         </div>
         <p class="search-hint">Try: 1, 5, 100 or "prayer", "water", "fasting"</p>
+      </div>
+
+      <!-- Hadith Collections Selector -->
+      <div class="collections-selector">
+        <button class="collection-btn active" data-collection="eng-bukhari" onclick="selectCollection(this)">Sahih al-Bukhari</button>
+        <button class="collection-btn" data-collection="eng-muslim" onclick="selectCollection(this)">Sahih Muslim</button>
+        <button class="collection-btn" data-collection="eng-abudawud" onclick="selectCollection(this)">Sunan Abu Dawud</button>
+        <button class="collection-btn" data-collection="eng-tirmidhi" onclick="selectCollection(this)">Sunan at-Tirmidhi</button>
+        <button class="collection-btn" data-collection="eng-nasai" onclick="selectCollection(this)">Sunan an-Nasa'i</button>
+        <button class="collection-btn" data-collection="eng-ibnmajah" onclick="selectCollection(this)">Sunan Ibn Majah</button>
       </div>
 
       <!-- Hadith Display Card -->
