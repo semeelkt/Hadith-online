@@ -764,22 +764,22 @@
                 <div class="resource-card">
                   <h4>Hadith Terminology Glossary</h4>
                   <p>Complete glossary of hadith terms with definitions and examples.</p>
-                  <button class="download-btn"><i class="bi bi-download"></i> Download PDF</button>
+                  <button class="download-btn" onclick="downloadTerminologyGlossary()"><i class="bi bi-download"></i> Download PDF</button>
                 </div>
                 <div class="resource-card">
                   <h4>Study Guide to Mustalah al-Hadith</h4>
                   <p>Comprehensive study guide organized by topic for hadith terminology.</p>
-                  <button class="download-btn"><i class="bi bi-download"></i> Download PDF</button>
+                  <button class="download-btn" onclick="downloadMustalahGuide()"><i class="bi bi-download"></i> Download PDF</button>
                 </div>
                 <div class="resource-card">
                   <h4>Narrator Evaluation Chart</h4>
                   <p>Quick reference chart for evaluating hadith narrators.</p>
-                  <button class="download-btn"><i class="bi bi-download"></i> Download PDF</button>
+                  <button class="download-btn" onclick="downloadNarratorChart()"><i class="bi bi-download"></i> Download PDF</button>
                 </div>
                 <div class="resource-card">
                   <h4>Hadith Sciences Quick Reference</h4>
                   <p>Quick reference guide covering all major hadith sciences.</p>
-                  <button class="download-btn"><i class="bi bi-download"></i> Download PDF</button>
+                  <button class="download-btn" onclick="downloadHadithSciences()"><i class="bi bi-download"></i> Download PDF</button>
                 </div>
               </div>
             </div>
@@ -833,6 +833,8 @@
     </div>
   </footer>
 
+  <!-- PDF Generation Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
   <script src="study.js"></script>
 </body>
 </html>
