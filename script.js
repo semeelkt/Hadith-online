@@ -1,5 +1,35 @@
-import { db } from './firebase-config.js';
-import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+// Import Firebase SDK from CDN
+const firebaseConfig = {
+  apiKey: "AIzaSyAbdohB61du6uE627zE7suf7kRk9eIw60U",
+  authDomain: "zonera-e4b13.firebaseapp.com",
+  projectId: "zonera-e4b13",
+  storageBucket: "zonera-e4b13.firebasestorage.app",
+  messagingSenderId: "176063306389",
+  appId: "1:176063306389:web:b4dfadc3f89b502eed999c"
+};
+
+let db = null;
+
+// Initialize Firebase when SDK loads (with retry)
+function initializeFirebase() {
+  if (typeof firebase !== 'undefined' && !db) {
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      db = firebase.firestore();
+    } catch (error) {
+      console.warn("Firebase initialization error:", error);
+      // Retry after 1 second
+      setTimeout(initializeFirebase, 1000);
+    }
+  } else if (!db) {
+    setTimeout(initializeFirebase, 500);
+  }
+}
+
+// Start initialization
+initializeFirebase();
 
 // ============================================
 // ADMIN FUNCTIONALITY
@@ -96,7 +126,7 @@ async function publishArticle(event) {
 
     try {
       // Save to Firestore
-      await addDoc(collection(db, "articles"), article);
+      await db.collection("articles").add(article);
       messageElement.textContent = "✓ Article published successfully!";
       messageElement.className = "message success";
 
@@ -125,11 +155,9 @@ async function publishArticle(event) {
 // Load articles
 async function loadArticles() {
   try {
-    const q = query(
-      collection(db, "articles"),
-      orderBy("createdAt", "desc")
-    );
-    const querySnapshot = await getDocs(q);
+    const querySnapshot = await db.collection("articles")
+      .orderBy("createdAt", "desc")
+      .get();
     const articles = [];
 
     querySnapshot.forEach((doc) => {
@@ -175,7 +203,7 @@ async function loadArticles() {
 async function deleteArticle(docId) {
   if (confirm("Are you sure you want to delete this article?")) {
     try {
-      await deleteDoc(doc(db, "articles", docId));
+      await db.collection("articles").doc(docId).delete();
       loadArticles();
       displayHomeArticles();
     } catch (error) {
@@ -188,11 +216,9 @@ async function deleteArticle(docId) {
 // Display articles on home page (latest 3 only)
 async function displayHomeArticles() {
   try {
-    const q = query(
-      collection(db, "articles"),
-      orderBy("createdAt", "desc")
-    );
-    const querySnapshot = await getDocs(q);
+    const querySnapshot = await db.collection("articles")
+      .orderBy("createdAt", "desc")
+      .get();
     const articles = [];
 
     querySnapshot.forEach((doc) => {
@@ -266,11 +292,9 @@ function closeArticleReader() {
 // Open more articles modal
 async function openMoreArticles() {
   try {
-    const q = query(
-      collection(db, "articles"),
-      orderBy("createdAt", "desc")
-    );
-    const querySnapshot = await getDocs(q);
+    const querySnapshot = await db.collection("articles")
+      .orderBy("createdAt", "desc")
+      .get();
     const articles = [];
 
     querySnapshot.forEach((doc) => {
@@ -353,6 +377,20 @@ document.addEventListener("keypress", (e) => {
     loginAdmin();
   }
 });
+
+// Expose functions to global scope for HTML onclick handlers
+window.closeAdminModal = closeAdminModal;
+window.loginAdmin = loginAdmin;
+window.logoutAdmin = logoutAdmin;
+window.switchTab = switchTab;
+window.publishArticle = publishArticle;
+window.loadArticles = loadArticles;
+window.deleteArticle = deleteArticle;
+window.openMoreArticles = openMoreArticles;
+window.closeMoreArticles = closeMoreArticles;
+window.closeArticleReader = closeArticleReader;
+window.openArticleReader = openArticleReader;
+window.loadHadith = loadHadith;
 
 // ============================================
 // HADITH FUNCTIONALITY
