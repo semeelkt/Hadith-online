@@ -76,6 +76,13 @@ body {
   letter-spacing: 0.5px;
 }
 
+.logo-image {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
 .navbar-logo h1 {
   font-size: 1.5rem;
   font-weight: 700;
@@ -1362,6 +1369,10 @@ body {
 @media (max-width: 480px) {
   .navbar-logo h1 {
     font-size: 1.1rem;
+  }
+
+  .logo-image {
+    height: 60px;
   }
 
   .hero-content h2 {
