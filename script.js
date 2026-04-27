@@ -142,14 +142,22 @@ async function publishArticle(event) {
   const title = document.getElementById("articleTitle").value;
   const content = document.getElementById("articleContent").value;
   const author = document.getElementById("articleAuthor").value;
+  const category = document.getElementById("articleCategory").value;
+  const tagsInput = document.getElementById("articleTags").value;
   const imageFile = document.getElementById("articleImage").files[0];
   const messageElement = document.getElementById("publishMessage");
 
-  if (!title || !content || !author || !imageFile) {
+  if (!title || !content || !author || !imageFile || !category) {
     messageElement.textContent = "✘ Please fill all fields";
     messageElement.className = "message error";
     return;
   }
+
+  // Parse tags from comma-separated input
+  const tags = tagsInput
+    .split(",")
+    .map(tag => tag.trim())
+    .filter(tag => tag.length > 0);
 
   // Convert image to base64
   const reader = new FileReader();
@@ -160,6 +168,8 @@ async function publishArticle(event) {
       title,
       content,
       author,
+      category,
+      tags,
       image: imageData,
       date: new Date().toLocaleDateString(),
       createdAt: new Date()
@@ -175,6 +185,8 @@ async function publishArticle(event) {
       document.getElementById("articleTitle").value = "";
       document.getElementById("articleContent").value = "";
       document.getElementById("articleAuthor").value = "";
+      document.getElementById("articleCategory").value = "";
+      document.getElementById("articleTags").value = "";
       document.getElementById("articleImage").value = "";
 
       // Refresh home articles

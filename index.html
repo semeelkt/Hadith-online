@@ -75,6 +75,21 @@
         <textarea id="articleContent" placeholder="Article Content" rows="6" required></textarea>
         <input type="text" id="articleAuthor" placeholder="Author" required>
         <input type="file" id="articleImage" accept="image/*" required>
+
+        <select id="articleCategory" class="admin-select" required>
+          <option value="">Select Category</option>
+          <option value="Aqeedah">Aqeedah</option>
+          <option value="Hadith">Hadith</option>
+          <option value="Fiqh">Fiqh</option>
+          <option value="Seerah">Seerah</option>
+          <option value="Taskyiah">Taskyiah</option>
+          <option value="Family & Society">Family & Society</option>
+          <option value="Islamic History">Islamic History</option>
+          <option value="Modern Issues">Modern Issues</option>
+        </select>
+
+        <input type="text" id="articleTags" placeholder="Tags (comma-separated, e.g: Knowledge, Learning, Islam)" class="admin-input">
+
         <button type="submit" class="admin-submit-btn">Publish Article</button>
       </form>
       <p id="publishMessage" class="message"></p>
@@ -228,7 +243,7 @@
     <section class="latest-articles-section">
       <div class="articles-header-new">
         <h2>Latest Articles</h2>
-        <a href="#" onclick="openMoreArticles(); return false;" class="view-all-link">View all articles <i class="bi bi-arrow-right"></i></a>
+        <a href="articles.html" class="view-all-link">View all articles <i class="bi bi-arrow-right"></i></a>
       </div>
       <div id="homeArticlesList" class="articles-carousel"></div>
     </section>
@@ -282,23 +297,6 @@
     </div>
   </div>
 
-  <!-- All Articles Modal -->
-  <div id="allArticlesModal" class="modal hidden">
-    <div class="all-articles-modal-content">
-      <button class="modal-close" onclick="closeMoreArticles()">✕</button>
-      <h2>All Articles</h2>
-      <div class="articles-search-container">
-        <input
-          type="text"
-          id="articlesSearchInput"
-          placeholder="Search articles by title or author..."
-          class="articles-search-input"
-          onkeyup="filterArticles()"
-        >
-      </div>
-      <div id="allArticlesList" class="all-articles-list"></div>
-    </div>
-  </div>
 
   <footer class="footer">
     <div class="footer-content">
