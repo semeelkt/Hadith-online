@@ -282,7 +282,6 @@ function createArticleCard(article) {
       <p>${article.content.substring(0, 150)}...</p>
       <div class="article-card-meta">
         <div class="article-meta-left">
-          <img src="https://ui-avatars.com/api/?name=${article.author}" alt="${article.author}" class="author-avatar">
           <div class="author-info">
             <div class="author-name">By ${article.author}</div>
             <div class="author-date">${article.date}</div>
@@ -353,13 +352,8 @@ function openArticleReader(article) {
     </span>
     <h2>${article.title}</h2>
     <div class="reader-meta">
-      <div class="reader-author-info">
-        <img src="https://ui-avatars.com/api/?name=${article.author}" alt="${article.author}" class="reader-author-avatar">
-        <div>
-          <div class="reader-author">By ${article.author}</div>
-          <div class="reader-date">${article.date}</div>
-        </div>
-      </div>
+      <div class="reader-author">By ${article.author}</div>
+      <div class="reader-date">${article.date}</div>
     </div>
     ${tagsHTML ? `<div class="reader-tags">${tagsHTML}</div>` : ''}
     <div class="reader-body">${article.content}</div>

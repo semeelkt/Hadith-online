@@ -148,7 +148,7 @@ async function publishArticle(event) {
   const messageElement = document.getElementById("publishMessage");
 
   if (!title || !content || !author || !imageFile || !category) {
-    messageElement.textContent = "✘ Please fill all fields";
+    messageElement.textContent = "✘ Please fill all required fields";
     messageElement.className = "message error";
     return;
   }
@@ -196,9 +196,9 @@ async function publishArticle(event) {
         messageElement.textContent = "";
       }, 3000);
     } catch (error) {
-      messageElement.textContent = "✘ Error publishing article";
-      messageElement.className = "message error";
       console.error("Error publishing article:", error);
+      messageElement.textContent = "✘ Error publishing article. Please try with smaller images.";
+      messageElement.className = "message error";
     }
   };
 
@@ -329,8 +329,8 @@ function openArticleReader(article) {
     <img src="${article.image}" alt="${article.title}">
     <h2>${article.title}</h2>
     <div class="reader-meta">
-      <div><span class="reader-author">By ${article.author}</span></div>
-      <div>${article.date}</div>
+      <div class="reader-author">By ${article.author}</div>
+      <div class="reader-date">${article.date}</div>
     </div>
     <div class="reader-body">${article.content}</div>
   `;

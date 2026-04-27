@@ -3150,12 +3150,6 @@ body {
   flex: 1;
 }
 
-.author-avatar {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-}
-
 .author-info {
   font-size: 0.85rem;
 }
@@ -3289,11 +3283,22 @@ body {
   text-transform: capitalize;
 }
 
-.reader-author-info {
+.reader-meta {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  gap: 2rem;
   margin: 1.5rem 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.reader-author {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.reader-date {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
 }
 
 .reader-tags {
