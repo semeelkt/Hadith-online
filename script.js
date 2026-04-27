@@ -428,6 +428,14 @@ document.addEventListener("click", (e) => {
 // Load articles on page load
 document.addEventListener("DOMContentLoaded", () => {
   displayHomeArticles();
+
+  // Add event listener for the books filter dropdown
+  const booksFilterDropdown = document.querySelector(".books-filter");
+  if (booksFilterDropdown) {
+    booksFilterDropdown.addEventListener("change", (e) => {
+      currentCollection = e.target.value || "eng-bukhari";
+    });
+  }
 });
 
 // Close modals when clicking outside
@@ -473,7 +481,7 @@ let currentCollection = "eng-bukhari";
 // Select collection function
 function selectCollection(button) {
   // Remove active class from all buttons
-  document.querySelectorAll(".collection-btn").forEach(btn => {
+  document.querySelectorAll(".book-option").forEach(btn => {
     btn.classList.remove("active");
   });
 
@@ -482,6 +490,20 @@ function selectCollection(button) {
 
   // Update current collection
   currentCollection = button.getAttribute("data-collection");
+
+  // Also update the dropdown to match
+  const dropdown = document.querySelector(".books-filter");
+  if (dropdown) {
+    dropdown.value = currentCollection;
+  }
+}
+
+// Update collection from dropdown
+function updateCollectionFromDropdown() {
+  const dropdown = document.querySelector(".books-filter");
+  if (dropdown) {
+    currentCollection = dropdown.value || "eng-bukhari";
+  }
 }
 
 async function getHadith(collection, id) {
