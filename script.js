@@ -266,7 +266,7 @@ async function deleteArticle(docId) {
   }
 }
 
-// Display articles on home page (latest 3 only)
+// Display articles on home page (latest 4 only)
 async function displayHomeArticles() {
   try {
     const querySnapshot = await db.collection("articles")
@@ -286,8 +286,8 @@ async function displayHomeArticles() {
 
     articlesList.innerHTML = "";
 
-    // Show only latest 3
-    const latestArticles = articles.slice(0, 3);
+    // Show only latest 4
+    const latestArticles = articles.slice(0, 4);
 
     if (latestArticles.length === 0) {
       articlesList.innerHTML = "<p class='home-articles-empty'>No articles published yet. Check back soon!</p>";
@@ -302,7 +302,6 @@ async function displayHomeArticles() {
       articleCard.innerHTML = `
         <img src="${article.image}" alt="${article.title}">
         <div class="article-card-content">
-          <span class="article-card-badge">Article</span>
           <h3 class="article-card-title">${article.title}</h3>
           <p class="article-card-description">${article.content}</p>
           <div class="article-card-meta">
